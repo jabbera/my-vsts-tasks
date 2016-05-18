@@ -1,0 +1,61 @@
+{
+    "id": "BF65DD9D-18CB-40D9-9254-F3AC527428EF",
+    "name": "StartWindowsService",
+    "friendlyName": "Start Windows Service",
+    "description": "Start a windows service.",
+    "helpMarkDown": "[More Information](TODO)",
+    "category": "Utility",
+    "visibility": [
+        "Build",
+        "Release"
+    ],
+    "author": "Michael Barry",
+    "version": {
+        "Major": 0,
+        "Minor": 0,
+        "Patch": 1
+    },
+    "minimumAgentVersion": "1.95.0",	
+    "inputs": [
+        {
+            "name": "ServiceName",
+            "type": "string",
+            "label": "ServiceName",
+            "defaultValue": "",
+            "required": true,
+            "helpMarkDown": "The name of the windows service to start." 
+        },
+        {
+            "name": "EnvironmentName",
+            "type": "multiLine",
+            "label": "Machines",
+            "defaultValue": "",
+            "required": true,
+            "helpMarkDown": "Provide a comma separated list of machine IP addresses or FQDNs. <br>Eg: dbserver.fabrikam.com,192.168.12.34 <br>Or provide output variable of other tasks. Eg: $(variableName)"
+        },
+        {
+            "name": "AdminUserName",
+            "type": "string",
+            "label": "Admin Login",
+            "defaultValue": "",
+            "required": true,
+            "helpMarkDown": "Administrator login for the target machines."
+        },
+        {
+            "name": "AdminPassword",
+            "type": "string",
+            "label": "Password",
+            "defaultValue": "",
+            "required": true,
+            "helpMarkDown": "Password for administrator login for the target machines. <br>It can accept variable defined in Build/Release definitions as '$(passwordVariable)'. <br>You may mark variable type as 'secret' to secure it. "
+        }
+    ],
+    "instanceNameFormat": "Start Windows Service: $(ServiceName)",
+    "execution": {
+        "PowerShell": {
+            "target": "$(currentDirectory)\\StartWindowsService.ps1",
+            "argumentFormat": "",
+            "workingDirectory": "$(currentDirectory)"
+        }
+    }
+}

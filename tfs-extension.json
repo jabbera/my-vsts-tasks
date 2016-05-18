@@ -1,0 +1,50 @@
+{
+    "manifestVersion": 1,
+    "id": "windows-service-release-tasks",
+    "name": "Windows Service Release Tasks",
+    "version": "0.0.1",
+    "publisher": "jabbera",
+    "targets": [
+        {
+            "id": "Microsoft.VisualStudio.Services"
+        }
+    ],    
+    "description": "Release management tasks for the manipulation of windows services. Icon made by Freepik from www.flaticon.com",
+    "categories": [
+        "Release"
+    ],
+    "tags": [ "Service" ],
+    "icons": {
+        "default": "extension-icon.png"        
+    },
+    "files": [
+        {
+            "path": "StartWindowsService"
+        },
+        {
+            "path": "StopWindowsService"
+        }
+    ],
+    "contributions": [
+        {
+            "id": "start-windows-service-task",
+            "type": "ms.vss-distributed-task.task",
+            "targets": [
+                "ms.vss-distributed-task.tasks"
+            ],
+            "properties": {
+                "name": "StartWindowsService"
+            }
+        },
+        {
+            "id": "stop-windows-service-task",
+            "type": "ms.vss-distributed-task.task",
+            "targets": [
+                "ms.vss-distributed-task.tasks"
+            ],
+            "properties": {
+                "name": "StopWindowsService"
+            }
+        }
+    ]
+}
