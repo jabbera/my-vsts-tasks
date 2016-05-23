@@ -2,18 +2,31 @@
     "manifestVersion": 1,
     "id": "windows-service-release-tasks",
     "name": "Windows Service Release Tasks",
-    "version": "0.0.1",
+    "version": "0.0.6",
     "publisher": "jabbera",
     "targets": [
         {
             "id": "Microsoft.VisualStudio.Services"
         }
     ],    
-    "description": "Release management tasks for the manipulation of windows services. Icon made by Freepik from www.flaticon.com",
+    "description": "Release management tasks for the manipulation of windows services. Icons made by Freepik from www.flaticon.com. Icons made by Google from www.flaticon.com",
     "categories": [
-        "Release"
+        "Build and release"
     ],
     "tags": [ "Service" ],
+	 "content": {
+        "license": {
+            "path": "license.txt"
+        }
+    },
+	"links": {
+        "getstarted": {
+            "uri": "https://github.com/jabbera/my-vsts-tasks"
+        },
+        "support": {
+            "uri": "https://github.com/jabbera/my-vsts-tasks/issues"
+        }
+    },
     "icons": {
         "default": "extension-icon.png"        
     },

@@ -1,8 +1,8 @@
 {
-    "id": "BF65DD9D-18CB-40D9-9254-F3AC527428EF",
-    "name": "StartWindowsService",
-    "friendlyName": "Start Windows Service",
-    "description": "Start a windows service.",
+    "id": "601CD43E-B65D-49B7-B118-091333BD5B9F",
+    "name": "StopWindowsService",
+    "friendlyName": "Stop Windows Service",
+    "description": "Stop a windows service.",
     "helpMarkDown": "[More Information](TODO)",
     "category": "Utility",
     "visibility": [
@@ -23,7 +23,7 @@
             "label": "ServiceName",
             "defaultValue": "",
             "required": true,
-            "helpMarkDown": "The name of the windows service to start." 
+            "helpMarkDown": "The name of the windows service to stop." 
         },
         {
             "name": "EnvironmentName",
@@ -54,18 +54,19 @@
 		  "type": "radio",
 		  "label": "Service Startup Type",
 		  "required": false,
-		  "defaultValue": "Automatic",
+		  "defaultValue": "Disabled",
 		  "options": {
+			"Disabled": "Disabled",
 			"Manual": "Manual",
 			"Automatic": "Automatic",
 		  },
 		  "helpMarkDown": "Select the startup type for the service."
 		}
     ],
-    "instanceNameFormat": "Start Windows Service: $(ServiceName)",
+    "instanceNameFormat": "Stop Windows Service: $(ServiceName)",
     "execution": {
         "PowerShell": {
-            "target": "$(currentDirectory)\\StartWindowsService.ps1",
+            "target": "$(currentDirectory)\\StopWindowsService.ps1",
             "argumentFormat": "",
             "workingDirectory": "$(currentDirectory)"
         }
