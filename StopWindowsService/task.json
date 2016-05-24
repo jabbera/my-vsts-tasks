@@ -3,7 +3,7 @@
     "name": "StopWindowsService",
     "friendlyName": "Stop Windows Service",
     "description": "Stop a windows service.",
-    "helpMarkDown": "[More Information](TODO)",
+    "helpMarkDown": "",
     "category": "Utility",
     "visibility": [
         "Build",
@@ -11,9 +11,9 @@
     ],
     "author": "Michael Barry",
     "version": {
-        "Major": 0,
+        "Major": 1,
         "Minor": 0,
-        "Patch": 2
+        "Patch": 0
     },
     "minimumAgentVersion": "1.95.0",	
     "inputs": [

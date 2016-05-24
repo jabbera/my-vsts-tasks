@@ -7,7 +7,7 @@ param(
 	[string][Parameter(Mandatory=$true)][ValidateSet("Manual", "Automatic")] $startupType
 )
 
-Write-Output "Starting Windows Service $serviceName"
+Write-Output "Starting Windows Service $serviceName and setting startup type to: $startupType"
 
 $machines = ($environmentName -split ',').Trim()
 
