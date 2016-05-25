@@ -11,9 +11,9 @@
     ],
     "author": "Michael Barry",
     "version": {
-        "Major": 1,
+        "Major": 0,
         "Minor": 0,
-        "Patch": 0
+        "Patch": 10
     },
     "minimumAgentVersion": "1.95.0",	
     "inputs": [

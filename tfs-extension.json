@@ -2,23 +2,32 @@
     "manifestVersion": 1,
     "id": "windows-service-release-tasks",
     "name": "Windows Service Release Tasks",
-    "version": "1.0.0",
+    "version": "0.0.10",
     "publisher": "jabbera",
+	"public": "true",
     "targets": [
         {
             "id": "Microsoft.VisualStudio.Services"
         }
     ],    
-    "description": "Release management tasks for the starting and stopping of windows services. Icons made by Freepik from www.flaticon.com. Icons made by Google from www.flaticon.com",
+    "description": "Release management tasks for the starting and stopping of windows services.",
     "categories": [
         "Build and release"
     ],
-    "tags": [ "Service" ],
+    "tags": [ "service", "release", "windows service" ],
 	 "content": {
         "license": {
             "path": "license.txt"
-        }
+        },
+		"details": {
+			"path": "overview.md"
+		}
     },
+	"screenshots": [
+		{
+			"path": "screenshots/screenshot1.png"
+		}
+	],
 	"links": {
         "getstarted": {
             "uri": "https://github.com/jabbera/my-vsts-tasks"
@@ -59,5 +68,9 @@
                 "name": "StopWindowsService"
             }
         }
-    ]
+    ],
+	"galleryFlags": [
+		"Public",
+		"Preview"
+	]
 }
