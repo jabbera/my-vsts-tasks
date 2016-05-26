@@ -1,3 +1,0 @@
-[submodule "vsts-rm-extensions"]
-	path = vsts-rm-extensions
-	url = https://github.com/Microsoft/vsts-rm-extensions.git
