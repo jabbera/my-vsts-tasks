@@ -11,7 +11,10 @@ Write-Output "Stopping Windows Service: $serviceName and setting startup type to
 
 $machines = ($environmentName -split ',').Trim()
 
-$machines = $machines | ForEach-Object { Get-Service -ComputerName $_ | Where-Object { $_.Name -eq $serviceName } | % { $_.MachineName }}
+$securePassword = ConvertTo-SecureString -AsPlainText $adminPassword -Force
+$cred = new-object -typename System.Management.Automation.PSCredential -argumentlist $adminUserName, $securePassword
+
+$machines = $machines | %{ Invoke-Command -Credential $cred -ComputerName $_ -ScriptBlock { Get-Service }} | Where-Object { $_.Name -eq $serviceName } | % { $_.PSComputerName }
 
 if ($machines.Length -eq 0)
 {
@@ -35,9 +38,6 @@ Configuration $guid
 }
  
 Invoke-Expression $guid
-
-$securePassword = ConvertTo-SecureString -AsPlainText $adminPassword -Force
-$cred = new-object -typename System.Management.Automation.PSCredential -argumentlist $adminUserName, $securePassword
 
 Start-DscConfiguration -Path $guid -Credential $cred -Wait -Verbose
 

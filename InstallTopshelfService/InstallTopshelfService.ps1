@@ -6,7 +6,7 @@ param(
     [string][Parameter(Mandatory=$true)][ValidateNotNullOrEmpty()] $adminPassword,
     [string][Parameter(Mandatory=$true)] $protocol,
     [string][Parameter(Mandatory=$true)] $testCertificate,
-	[string][Parameter(Mandatory=$true)][ValidateSet("None", "localsystem", "localservice", "networkservice")] $specialUser,
+	[string][Parameter(Mandatory=$true)][ValidateSet("custom", "localsystem", "localservice", "networkservice")] $specialUser,
 	[string] $serviceUsername,
     [string] $servicePassword,
     [string] $instanceName

@@ -20,7 +20,6 @@ Configuration $guid
         Service ServiceResource
         {
             Name = $serviceName
-            State = "Running"
             StartupType = $startupType
         }
     }
@@ -34,4 +33,24 @@ $cred = new-object -typename System.Management.Automation.PSCredential -argument
 
 Start-DscConfiguration -Path $guid -Credential $cred -Wait -Verbose
 
+Remove-Item -Path $guid -Recurse
+
+Start-Sleep -s 5
+
+Configuration $guid
+{ 
+    Node $machines
+    {
+        Service ServiceResource
+        {
+            Name = $serviceName
+            State = "Running"
+        }
+    }
+}
+ 
+Invoke-Expression $guid
+
+Start-DscConfiguration -Path $guid -Credential $cred -Wait -Verbose
+            
 Remove-Item -Path $guid -Recurse
