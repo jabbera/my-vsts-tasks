@@ -2,7 +2,7 @@
     "manifestVersion": 1,
     "id": "windows-service-release-tasks",
     "name": "Windows Service Release Tasks",
-    "version": "0.0.10",
+    "version": "0.0.33",
     "publisher": "jabbera",
 	"public": "true",
     "targets": [
@@ -10,7 +10,7 @@
             "id": "Microsoft.VisualStudio.Services"
         }
     ],    
-    "description": "Release management tasks for the starting and stopping of windows services.",
+    "description": "Release management tasks for the starting, stopping, and install(TopShelf) of windows services.",
     "categories": [
         "Build and release"
     ],
@@ -45,6 +45,9 @@
         },
         {
             "path": "StopWindowsService"
+        },
+        {
+            "path": "InstallTopshelfService"
         }
     ],
     "contributions": [
@@ -66,6 +69,16 @@
             ],
             "properties": {
                 "name": "StopWindowsService"
+            }
+        },
+        {
+            "id": "install-topshelf-service-task",
+            "type": "ms.vss-distributed-task.task",
+            "targets": [
+                "ms.vss-distributed-task.tasks"
+            ],
+            "properties": {
+                "name": "InstallTopshelfService"
             }
         }
     ],

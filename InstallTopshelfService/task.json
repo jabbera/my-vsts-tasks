@@ -1,0 +1,122 @@
+{
+    "id": "7A706BCB-DAF2-49C0-B770-CE2DB484205D",
+    "name": "InstallTopshelfService",
+    "friendlyName": "Install Topshelf Service",
+    "description": "Installs a TopShelf service using the standard command line options for Topshelf 4.0.",
+    "helpMarkDown": "[More Information](http://http://topshelf-project.com/)",
+    "category": "Utility",
+    "visibility": [
+        "Build",
+        "Release"
+    ],
+    "author": "Michael Barry",
+    "version": {
+        "Major": 0,
+        "Minor": 0,
+        "Patch": 33
+    },
+    "minimumAgentVersion": "1.95.0",	
+    "inputs": [
+        {
+            "name": "TopshelfExePath",
+            "type": "string",
+            "label": "TopshelfExePath",
+            "defaultValue": "",
+            "required": true,
+            "helpMarkDown": "Fill path to topshelf executable." 
+        },
+        {
+            "name": "EnvironmentName",
+            "type": "multiLine",
+            "label": "Machines",
+            "defaultValue": "",
+            "required": true,
+            "helpMarkDown": "Provide a comma separated list of machine IP addresses or FQDNs. <br>Eg: dbserver.fabrikam.com,192.168.12.34 <br>Or provide output variable of other tasks. Eg: $(variableName)"
+        },
+        {
+            "name": "AdminUserName",
+            "type": "string",
+            "label": "Admin Login",
+            "defaultValue": "",
+            "required": true,
+            "helpMarkDown": "Administrator login for the target machines."
+        },
+        {
+            "name": "AdminPassword",
+            "type": "string",
+            "label": "Password",
+            "defaultValue": "",
+            "required": true,
+            "helpMarkDown": "Password for administrator login for the target machines. <br>It can accept variable defined in Build/Release definitions as '$(passwordVariable)'. <br>You may mark variable type as 'secret' to secure it. "
+        },
+		{
+            "name": "protocol",
+            "type": "radio",
+            "label": "Protocol",
+            "required": true,
+            "defaultValue": "Http",
+            "options": {
+                "Http": "HTTP",
+                "Https": "HTTPS"
+            },
+            "helpMarkDown": "Select the network protocol to use for the WinRM connection with the machine(s). The default is HTTPS."
+        },
+        {
+            "name": "TestCertificate",
+            "type": "boolean",
+            "label": "Test Certificate",
+            "defaultValue": "true",
+            "visibleRule": "protocol = Https",
+            "required": false,
+            "helpMarkDown": "Select the option to skip validating the authenticity of the machine's certificate from a trusted certification authority. The parameter is required for the WinRM HTTPS protocol."
+        },
+		{
+            "name": "specialUser",
+            "type": "radio",
+            "label": "Special User",
+            "required": true,
+            "defaultValue": "custom",
+            "options": {
+                "custom": "Custom",
+                "localsystem": "Local System",
+                "localservice": "Local Service",
+                "networkservice": "Network Service"
+            },
+            "helpMarkDown": "Select the network protocol to use for the WinRM connection with the machine(s). The default is HTTPS."
+        },
+        {
+            "name": "ServiceUsername",
+            "type": "string",
+            "label": "Service Username",
+            "defaultValue": "",
+			"visibleRule": "specialUser = custom",
+            "required": false,
+            "helpMarkDown": "Username to run the service as."
+        },
+        {
+            "name": "ServicePassword",
+            "type": "string",
+            "label": "Service Password",
+            "defaultValue": "",
+			"visibleRule": "specialUser = custom",
+            "required": false,
+            "helpMarkDown": "Password for the service account"
+        },
+        {
+            "name": "InstanceName",
+            "type": "string",
+            "label": "Instance Name",
+            "defaultValue": "",
+            "required": false,
+            "helpMarkDown": "An instance name if neccessary."
+        }
+    ],
+    "instanceNameFormat": "Install a Topshelf Service: $(TopshelfExePath)",
+    "execution": {
+        "PowerShell": {
+            "target": "$(currentDirectory)\\InstallTopshelfService.ps1",
+            "argumentFormat": "",
+            "workingDirectory": "$(currentDirectory)"
+        }
+    }
+}
