@@ -37,7 +37,10 @@ gulp.task("package", ["token-replace"], function() {
 
 gulp.task("token-replace", ["token-replace-bootstrap"], function(){	
   var config = require("./" + buildRoot + "/config.json");
-  return gulp.src(extnBuildRoot + "/**/*")
+  return gulp.src([
+		extnBuildRoot + "/**/*.json",
+		extnBuildRoot + "/**/*.ps1"
+	])
     .pipe(replace({tokens:config}))
     .pipe(gulp.dest(extnBuildRoot));
 	
