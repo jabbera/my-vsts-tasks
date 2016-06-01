@@ -18,9 +18,9 @@
     "minimumAgentVersion": "1.95.0",	
     "inputs": [
         {
-            "name": "ServiceName",
+            "name": "ServiceNames",
             "type": "multiLine",
-            "label": "ServiceName",
+            "label": "Service Names",
             "defaultValue": "",
             "required": true,
             "helpMarkDown": "The name of the windows service to stop. Comma separate to stop multiple." 
@@ -92,7 +92,7 @@
             "helpMarkDown": "Select the option to skip validating the authenticity of the machine's certificate from a trusted certification authority. The parameter is required for the WinRM HTTPS protocol."
         }
     ],
-    "instanceNameFormat": "Stop Windows Service: $(ServiceName)",
+    "instanceNameFormat": "Stop Windows Service: $(ServiceNames)",
     "execution": {
         "PowerShell": {
             "target": "$(currentDirectory)\\StopWindowsService.ps1",

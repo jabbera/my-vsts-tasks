@@ -12,7 +12,7 @@ function Validate-WaitTime()
 	{
 		if($parsedRunLockTimeout -gt 0)
 		{
-			return $parsedRunLockTimeout
+			return
 		}
 	}
 

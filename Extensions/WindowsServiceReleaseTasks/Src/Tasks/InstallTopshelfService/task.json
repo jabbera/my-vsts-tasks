@@ -18,12 +18,12 @@
     "minimumAgentVersion": "1.95.0",	
     "inputs": [
         {
-            "name": "TopshelfExePath",
+            "name": "TopshelfExePaths",
             "type": "string",
-            "label": "TopshelfExePath",
+            "label": "Topshelf Exe Paths",
             "defaultValue": "",
             "required": true,
-            "helpMarkDown": "Fill path to topshelf executable." 
+            "helpMarkDown": "Full path to topshelf executables. (Comma separated list)" 
         },
         {
             "name": "EnvironmentName",
@@ -111,7 +111,7 @@
             "helpMarkDown": "An instance name if neccessary."
         }
     ],
-    "instanceNameFormat": "Install a Topshelf Service: $(TopshelfExePath)",
+    "instanceNameFormat": "Install a Topshelf Service: $(TopshelfExePaths)",
     "execution": {
         "PowerShell": {
             "target": "$(currentDirectory)\\InstallTopshelfService.ps1",

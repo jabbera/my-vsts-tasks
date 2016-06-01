@@ -1,6 +1,6 @@
 [CmdletBinding(DefaultParameterSetName = 'None')]
 param(
-    [string][Parameter(Mandatory=$true)][ValidateNotNullOrEmpty()] $topshelfExePath,
+    [string][Parameter(Mandatory=$true)][ValidateNotNullOrEmpty()] $topshelfExePaths,
     [string][Parameter(Mandatory=$true)][ValidateNotNullOrEmpty()] $environmentName,
     [string][Parameter(Mandatory=$true)][ValidateNotNullOrEmpty()] $adminUserName,
     [string][Parameter(Mandatory=$true)][ValidateNotNullOrEmpty()] $adminPassword,
@@ -12,26 +12,31 @@ param(
     [string] $instanceName
 )
 
-Write-Verbose "Installing TopShelf service: $topshelfExeName with instanceName $instanceName. Version: {{tokens.BuildNumber}}"
+Write-Output "Installing TopShelf service: $topshelfExePaths with instanceName: $instanceName. Version: 1.1.9"
 
 $env:CURRENT_TASK_ROOTDIR = Split-Path -Parent $MyInvocation.MyCommand.Path
 
-$cmd = "& ""$topshelfExePath"" install "
-if (-Not [string]::IsNullOrWhiteSpace($serviceUsername))
-{
-    $cmd += "-username:$serviceUsername -password:$servicePassword"
-}
-else
-{
-    $cmd += "--$specialUser"
-}
+[string[]] $topshelfExePathsArray = ($topshelfExePaths -split ',').Trim()
 
-if (-Not [string]::IsNullOrWhiteSpace($instanceName))
-{
-    $cmd += " -instance:$instanceName"
-}
+$cmd = ""
 
-Write-Verbose "Invoking deployment"
+foreach($topShelfExe in $topshelfExePathsArray)
+{
+	$cmd = "& ""$topShelfExe"" install "
+	if (-Not [string]::IsNullOrWhiteSpace($serviceUsername))
+	{
+		$cmd += "-username:$serviceUsername -password:$servicePassword"
+	}
+	else
+	{
+		$cmd += "--$specialUser"
+	}
+
+	if (-Not [string]::IsNullOrWhiteSpace($instanceName))
+	{
+		$cmd += " -instance:$instanceName"
+	}
+}
 
 $errorMessage = Invoke-RemoteDeployment -environmentName $environmentName -tags "" -ScriptBlockContent $cmd -scriptArguments "" -runPowershellInParallel $false -adminUserName $adminUserName -adminPassword $adminPassword -protocol $protocol -testCertificate $testCertificate
 

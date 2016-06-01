@@ -91,7 +91,7 @@
             "helpMarkDown": "Select the option to skip validating the authenticity of the machine's certificate from a trusted certification authority. The parameter is required for the WinRM HTTPS protocol."
         }
     ],
-    "instanceNameFormat": "Start Windows Service: $(ServiceName)",
+    "instanceNameFormat": "Start Windows Service: $(ServiceNames)",
     "execution": {
         "PowerShell": {
             "target": "$(currentDirectory)\\StartWindowsService.ps1",
