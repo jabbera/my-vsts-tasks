@@ -16,8 +16,6 @@ Write-Verbose "Installing TopShelf service: $topshelfExeName with instanceName $
 
 $env:CURRENT_TASK_ROOTDIR = Split-Path -Parent $MyInvocation.MyCommand.Path
 
-. $env:CURRENT_TASK_ROOTDIR\DeploymentSDK\InvokeRemoteDeployment.ps1
-
 $cmd = "& ""$topshelfExePath"" install "
 if (-Not [string]::IsNullOrWhiteSpace($serviceUsername))
 {
@@ -35,7 +33,7 @@ if (-Not [string]::IsNullOrWhiteSpace($instanceName))
 
 Write-Verbose "Invoking deployment"
 
-$errorMessage = Invoke-RemoteDeployment $environmentName $cmd $adminUserName $adminPassword $protocol $false
+$errorMessage = Invoke-RemoteDeployment -environmentName $environmentName -tags "" -ScriptBlockContent $cmd -scriptArguments "" -runPowershellInParallel $false -adminUserName $adminUserName -adminPassword $adminPassword -protocol $protocol -testCertificate $testCertificate
 
 if(-Not [string]::IsNullOrEmpty($errorMessage))
 {
