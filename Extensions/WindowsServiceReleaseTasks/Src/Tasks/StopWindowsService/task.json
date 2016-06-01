@@ -13,7 +13,7 @@
     "version": {
         "Major": 1,
         "Minor": 0,
-        "Patch": 37
+        "Patch": 45
     },
     "minimumAgentVersion": "1.95.0",	
     "inputs": [
@@ -61,7 +61,36 @@
 			"Automatic": "Automatic"
 		  },
 		  "helpMarkDown": "Select the startup type for the service."
-		}
+		},
+		{
+            "name": "WaitTimeoutInSeconds",
+            "type": "string",
+            "label": "Wait timeout",
+            "defaultValue": "120",
+            "required": true,
+            "helpMarkDown": "Amount of time in seconds to wait for the service to start"
+        },
+		{
+            "name": "protocol",
+            "type": "radio",
+            "label": "Protocol",
+            "required": true,
+            "defaultValue": "Http",
+            "options": {
+                "Http": "HTTP",
+                "Https": "HTTPS"
+            },
+            "helpMarkDown": "Select the network protocol to use for the WinRM connection with the machine(s). The default is HTTPS."
+        },
+        {
+            "name": "TestCertificate",
+            "type": "boolean",
+            "label": "Test Certificate",
+            "defaultValue": "true",
+            "visibleRule": "protocol = Https",
+            "required": false,
+            "helpMarkDown": "Select the option to skip validating the authenticity of the machine's certificate from a trusted certification authority. The parameter is required for the WinRM HTTPS protocol."
+        }
     ],
     "instanceNameFormat": "Stop Windows Service: $(ServiceName)",
     "execution": {
