@@ -13,7 +13,7 @@ var buildRoot = "_build";
 var packageRoot = "_package";
 var extnBuildRoot = "_build/Extensions/";
 var sourcePaths = "Extensions/**/*";
-
+		
 gulp.task("clean", function() {
     return del([buildRoot, packageRoot]);
 });
@@ -47,11 +47,11 @@ gulp.task("token-replace", ["token-replace-bootstrap"], function(){
 });
 
 gulp.task("token-replace-bootstrap", ["build"], function(){	
-  var config = require("./config.bootstrap.json");
+  var config = require("./config.bootstrap.json");     
+  config.tokens["Minor"] = getMinorVersion();
   return gulp.src("./config.json")
     .pipe(replace({tokens:config}))
-    .pipe(gulp.dest(buildRoot));
-	
+    .pipe(gulp.dest(buildRoot));	
 });
 
 var copyCommonModules = function(extensionName) {
@@ -82,6 +82,17 @@ var executeCommand = function(cmd, callback) {
            callback();
        }
     });
+}
+
+var getMinorVersion = function()
+{
+  var now = new Date();
+  var start = new Date(now.getFullYear(), 0, 0);
+  var diff = now - start;
+  var oneDay = 1000 * 60 * 60 * 24;
+  var day = Math.floor(diff / oneDay);
+  var twoDigitYear = now.getFullYear().toString().substr(2,2);
+  return twoDigitYear.toString() + day.toString();
 }
 
 gulp.task("default", ["build"]);
