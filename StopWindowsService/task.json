@@ -11,19 +11,19 @@
     ],
     "author": "Michael Barry",
     "version": {
-        "Major": 0,
+        "Major": 1,
         "Minor": 0,
-        "Patch": 34
+        "Patch": 37
     },
     "minimumAgentVersion": "1.95.0",	
     "inputs": [
         {
             "name": "ServiceName",
-            "type": "string",
+            "type": "multiLine",
             "label": "ServiceName",
             "defaultValue": "",
             "required": true,
-            "helpMarkDown": "The name of the windows service to stop." 
+            "helpMarkDown": "The name of the windows service to stop. Comma separate to stop multiple." 
         },
         {
             "name": "EnvironmentName",
