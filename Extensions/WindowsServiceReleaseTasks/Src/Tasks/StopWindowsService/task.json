@@ -1,9 +1,9 @@
 {
-    "id": "BF65DD9D-18CB-40D9-9254-F3AC527428EF",
-    "name": "StartWindowsService",
-    "friendlyName": "Start Windows Service",
-    "description": "Start a windows service.",
-    "helpMarkDown": "[More Information](TODO)",
+    "id": "601CD43E-B65D-49B7-B118-091333BD5B9F",
+    "name": "StopWindowsService",
+    "friendlyName": "Stop Windows Service",
+    "description": "Stop a windows service.",
+    "helpMarkDown": "",
     "category": "Utility",
     "visibility": [
         "Build",
@@ -13,17 +13,17 @@
     "version": {
         "Major": 1,
         "Minor": 0,
-        "Patch": 41
+        "Patch": 37
     },
     "minimumAgentVersion": "1.95.0",	
     "inputs": [
         {
-            "name": "ServiceNames",
+            "name": "ServiceName",
             "type": "multiLine",
-            "label": "Service Names",
+            "label": "ServiceName",
             "defaultValue": "",
             "required": true,
-            "helpMarkDown": "The name of the windows service to start. Comma separate to stop multiple." 
+            "helpMarkDown": "The name of the windows service to stop. Comma separate to stop multiple." 
         },
         {
             "name": "EnvironmentName",
@@ -54,47 +54,19 @@
 		  "type": "radio",
 		  "label": "Service Startup Type",
 		  "required": false,
-		  "defaultValue": "Automatic",
+		  "defaultValue": "Disabled",
 		  "options": {
+			"Disabled": "Disabled",
 			"Manual": "Manual",
-			"Automatic": "Automatic",
+			"Automatic": "Automatic"
 		  },
 		  "helpMarkDown": "Select the startup type for the service."
-		},
-		{
-            "name": "WaitTimeoutInSeconds",
-            "type": "string",
-            "label": "Wait timeout",
-            "defaultValue": "120",
-            "required": true,
-            "helpMarkDown": "Amount of time in seconds to wait for the service to start"
-        },
-		{
-            "name": "protocol",
-            "type": "radio",
-            "label": "Protocol",
-            "required": true,
-            "defaultValue": "Http",
-            "options": {
-                "Http": "HTTP",
-                "Https": "HTTPS"
-            },
-            "helpMarkDown": "Select the network protocol to use for the WinRM connection with the machine(s). The default is HTTPS."
-        },
-        {
-            "name": "TestCertificate",
-            "type": "boolean",
-            "label": "Test Certificate",
-            "defaultValue": "true",
-            "visibleRule": "protocol = Https",
-            "required": false,
-            "helpMarkDown": "Select the option to skip validating the authenticity of the machine's certificate from a trusted certification authority. The parameter is required for the WinRM HTTPS protocol."
-        }
+		}
     ],
-    "instanceNameFormat": "Start Windows Service: $(ServiceName)",
+    "instanceNameFormat": "Stop Windows Service: $(ServiceName)",
     "execution": {
         "PowerShell": {
-            "target": "$(currentDirectory)\\StartWindowsService.ps1",
+            "target": "$(currentDirectory)\\StopWindowsService.ps1",
             "argumentFormat": "",
             "workingDirectory": "$(currentDirectory)"
         }

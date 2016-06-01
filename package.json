@@ -1,0 +1,21 @@
+{
+  "name": "vsts-windows-service-release-tasks",
+  "version": "1.0.41",
+  "description": "Release management tasks for the starting, stopping, and install(TopShelf) of windows services.",
+  "main": "app.js",
+  "author": "Michael Barry",
+  "license": "GPL-3.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jabbera/my-vsts-tasks"
+  },
+  "devDependencies": {
+    "del": "^2.2.0",
+    "fs-extra": "^0.28.0",
+    "gulp": "^3.9.0",
+    "gulp-util": "^3.0.7",
+    "q": "^1.4.1",
+    "shelljs": "^0.6.0",
+    "validator": "^5.2.0"
+  }
+}

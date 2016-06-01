@@ -1,0 +1,8 @@
+{
+    "StartWindowsService": [
+        {
+            "module": "Helper",
+            "dest": ""
+        }
+    ]
+}

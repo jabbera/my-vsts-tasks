@@ -41,13 +41,13 @@
     },
     "files": [
         {
-            "path": "StartWindowsService"
+            "path": "Tasks/StartWindowsService"
         },
         {
-            "path": "StopWindowsService"
+            "path": "Tasks/StopWindowsService"
         },
         {
-            "path": "InstallTopshelfService"
+            "path": "Tasks/InstallTopshelfService"
         }
     ],
     "contributions": [
@@ -58,7 +58,7 @@
                 "ms.vss-distributed-task.tasks"
             ],
             "properties": {
-                "name": "StartWindowsService"
+                "name": "Tasks/StartWindowsService"
             }
         },
         {
@@ -68,7 +68,7 @@
                 "ms.vss-distributed-task.tasks"
             ],
             "properties": {
-                "name": "StopWindowsService"
+                "name": "Tasks/StopWindowsService"
             }
         },
         {
@@ -78,7 +78,7 @@
                 "ms.vss-distributed-task.tasks"
             ],
             "properties": {
-                "name": "InstallTopshelfService"
+                "name": "Tasks/InstallTopshelfService"
             }
         }
     ],
