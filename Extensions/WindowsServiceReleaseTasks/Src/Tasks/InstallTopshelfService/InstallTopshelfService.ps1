@@ -12,7 +12,7 @@ param(
     [string] $instanceName
 )
 
-Write-Verbose "Installing TopShelf service: $topshelfExeName with instanceName $instanceName"
+Write-Verbose "Installing TopShelf service: $topshelfExeName with instanceName $instanceName. Version: {{tokens.BuildNumber}}"
 
 $env:CURRENT_TASK_ROOTDIR = Split-Path -Parent $MyInvocation.MyCommand.Path
 

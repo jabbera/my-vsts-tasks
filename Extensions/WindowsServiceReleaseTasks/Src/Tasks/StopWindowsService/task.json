@@ -3,7 +3,7 @@
     "name": "StopWindowsService",
     "friendlyName": "Stop Windows Service",
     "description": "Stop a windows service.",
-    "helpMarkDown": "",
+    "helpMarkDown": "Version: {{tokens.BuildNumber}} [More Information](https://github.com/jabbera/my-vsts-tasks)",
     "category": "Utility",
     "visibility": [
         "Build",
@@ -11,9 +11,9 @@
     ],
     "author": "Michael Barry",
     "version": {
-        "Major": 1,
-        "Minor": 0,
-        "Patch": 45
+        "Major": "{{tokens.Major}}",
+        "Minor": "{{tokens.Minor}}",
+        "Patch": "{{tokens.Patch}}"
     },
     "minimumAgentVersion": "1.95.0",	
     "inputs": [

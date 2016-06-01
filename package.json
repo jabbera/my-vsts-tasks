@@ -13,6 +13,8 @@
     "del": "^2.2.0",
     "fs-extra": "^0.28.0",
     "gulp": "^3.9.0",
+    "gulp-debug": "^2.1.2",
+    "gulp-token-replace": "^1.0.3",
     "gulp-util": "^3.0.7",
     "q": "^1.4.1",
     "shelljs": "^0.6.0",

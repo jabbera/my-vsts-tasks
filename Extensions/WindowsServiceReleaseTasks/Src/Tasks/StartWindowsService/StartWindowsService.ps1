@@ -10,7 +10,7 @@ param(
     [string][Parameter(Mandatory=$true)] $waitTimeoutInSeconds
 )
 
-Write-Output "Starting Windows Services $serviceNames and setting startup type to: $startupType"
+Write-Output "Starting Windows Services $serviceNames and setting startup type to: $startupType. Version: {{tokens.BuildNumber}}"
 
 $env:CURRENT_TASK_ROOTDIR = Split-Path -Parent $MyInvocation.MyCommand.Path
 

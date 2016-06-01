@@ -5,8 +5,9 @@ var path = require("path");
 var shell = require("shelljs");
 var spawn = require('child_process').spawn;
 var fs = require('fs-extra');
-
 var pkgm = require('./package');
+var replace = require('gulp-token-replace');
+var debug = require('gulp-debug');
 
 var buildRoot = "_build";
 var packageRoot = "_package";
@@ -28,10 +29,26 @@ gulp.task("build", ["compile"], function() {
     }).forEach(copyCommonModules);
 });
 
-gulp.task("package", ["build"], function() {
+gulp.task("package", ["token-replace"], function() {
     fs.readdirSync(extnBuildRoot).filter(function (file) {
         return fs.statSync(path.join(extnBuildRoot, file)).isDirectory() && file != "Common";
     }).forEach(createVsixPackage);
+});
+
+gulp.task("token-replace", ["token-replace-bootstrap"], function(){	
+  var config = require("./" + buildRoot + "/config.json");
+  return gulp.src(extnBuildRoot + "/**/*")
+    .pipe(replace({tokens:config}))
+    .pipe(gulp.dest(extnBuildRoot));
+	
+});
+
+gulp.task("token-replace-bootstrap", ["build"], function(){	
+  var config = require("./config.bootstrap.json");
+  return gulp.src("./config.json")
+    .pipe(replace({tokens:config}))
+    .pipe(gulp.dest(buildRoot));
+	
 });
 
 var copyCommonModules = function(extensionName) {
