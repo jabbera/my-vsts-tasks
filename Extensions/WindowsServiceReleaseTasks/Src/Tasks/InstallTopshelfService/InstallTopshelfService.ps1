@@ -12,7 +12,7 @@ param(
     [string] $instanceName
 )
 
-Write-Output "Installing TopShelf service: $topshelfExePaths with instanceName: $instanceName. Version: 1.1.9"
+Write-Output "Installing TopShelf service: $topshelfExePaths with instanceName: $instanceName. Version: {{tokens.BuildNumber}}"
 
 $env:CURRENT_TASK_ROOTDIR = Split-Path -Parent $MyInvocation.MyCommand.Path
 
@@ -22,7 +22,7 @@ $cmd = ""
 
 foreach($topShelfExe in $topshelfExePathsArray)
 {
-	$cmd = "& ""$topShelfExe"" install "
+	$cmd += "& ""$topShelfExe"" install "
 	if (-Not [string]::IsNullOrWhiteSpace($serviceUsername))
 	{
 		$cmd += "-username:$serviceUsername -password:$servicePassword"
@@ -36,7 +36,12 @@ foreach($topShelfExe in $topshelfExePathsArray)
 	{
 		$cmd += " -instance:$instanceName"
 	}
+	$cmd += "`n"
 }
+
+$santizedCmd = $cmd -replace "-password:$servicePassword", "-password:**********"
+
+Write-Output "CMD: $santizedCmd"
 
 $errorMessage = Invoke-RemoteDeployment -environmentName $environmentName -tags "" -ScriptBlockContent $cmd -scriptArguments "" -runPowershellInParallel $false -adminUserName $adminUserName -adminPassword $adminPassword -protocol $protocol -testCertificate $testCertificate
 
