@@ -4,7 +4,7 @@
     "friendlyName": "Install Topshelf Service",
     "description": "Installs a TopShelf service using the standard command line options for Topshelf 4.0.",
     "helpMarkDown": "Version: {{tokens.BuildNumber}} [More Information](https://github.com/jabbera/my-vsts-tasks)",
-    "category": "Utility",
+    "category": "Deploy",
     "visibility": [
         "Build",
         "Release"
