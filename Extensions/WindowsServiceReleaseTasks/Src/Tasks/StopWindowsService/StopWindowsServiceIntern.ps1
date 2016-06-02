@@ -10,8 +10,12 @@ $presentServicesArray = Get-Service | Where-Object { $servicesNamesArray -contai
 if ($servicesNamesArray.Length -ne $presentServicesArray.Length)
 {
     $missingServiceNames = $servicesNamesArray | Where-Object { $presentServicesArrayNames -notcontains $_ }
-    Write-Error "No such services: $missingServiceNames."
-    return -1;
+    Write-Verbose "No such services: $missingServiceNames."
+}
+
+if ($presentServicesArray.Length -eq 0)
+{
+	return
 }
 
 $presentServicesArray | % { Set-Service -Name $_.Name -StartupType $startupType }
