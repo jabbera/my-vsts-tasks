@@ -19,7 +19,7 @@
     "inputs": [
         {
             "name": "TopshelfExePaths",
-            "type": "string",
+            "type": "multiLine",
             "label": "Topshelf Exe Paths",
             "defaultValue": "",
             "required": true,
@@ -109,6 +109,14 @@
             "defaultValue": "",
             "required": false,
             "helpMarkDown": "An instance name if neccessary."
+        },
+        {
+            "name": "UninstallFirst",
+            "type": "boolean",
+            "label": "UnInstall service first",
+            "defaultValue": "true",
+            "required": true,
+            "helpMarkDown": "Check to uninstall the services before installation, effectivly resetting any manual changes. This will also stop services if running. (not reccomend as timeout it not controllable)"
         }
     ],
     "instanceNameFormat": "Install a Topshelf Service: $(TopshelfExePaths)",

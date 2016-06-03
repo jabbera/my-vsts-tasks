@@ -9,7 +9,8 @@ param(
 	[string][Parameter(Mandatory=$true)][ValidateSet("custom", "localsystem", "localservice", "networkservice")] $specialUser,
 	[string] $serviceUsername,
     [string] $servicePassword,
-    [string] $instanceName
+    [string] $instanceName,
+	[string] $uninstallFirst
 )
 
 Write-Output "Installing TopShelf service: $topshelfExePaths with instanceName: $instanceName. Version: {{tokens.BuildNumber}}"
@@ -18,25 +19,34 @@ $env:CURRENT_TASK_ROOTDIR = Split-Path -Parent $MyInvocation.MyCommand.Path
 
 [string[]] $topshelfExePathsArray = ($topshelfExePaths -split ',').Trim()
 
+$servicePassword = $servicePassword.Replace('`', '``').Replace('"', '`"').Replace('$', '`$')
+$instanceName = $instanceName.Replace('`', '``').Replace('"', '`"').Replace('$', '`$')
+
+$additionalArguments = ""
+if (-Not [string]::IsNullOrWhiteSpace($serviceUsername))
+{
+	$additionalArguments += " -username:$serviceUsername -password:$servicePassword"
+}
+else
+{
+	$additionalArguments += " --$specialUser"
+}
+
+if (-Not [string]::IsNullOrWhiteSpace($instanceName))
+{
+	$additionalArguments += " -instance:$instanceName"
+}
+
 $cmd = ""
 
 foreach($topShelfExe in $topshelfExePathsArray)
 {
-	$cmd += "& ""$topShelfExe"" install "
-	if (-Not [string]::IsNullOrWhiteSpace($serviceUsername))
+	if ($uninstallFirst -eq "true")
 	{
-		$cmd += "-username:$serviceUsername -password:$servicePassword"
+		$cmd += "& ""$topShelfExe"" uninstall $additionalArguments`n"
 	}
-	else
-	{
-		$cmd += "--$specialUser"
-	}
-
-	if (-Not [string]::IsNullOrWhiteSpace($instanceName))
-	{
-		$cmd += " -instance:$instanceName"
-	}
-	$cmd += "`n"
+	
+	$cmd += "& ""$topShelfExe"" install $additionalArguments`n"
 }
 
 $santizedCmd = $cmd -replace "-password:$servicePassword", "-password:**********"
