@@ -19,8 +19,8 @@ $env:CURRENT_TASK_ROOTDIR = Split-Path -Parent $MyInvocation.MyCommand.Path
 
 [string[]] $topshelfExePathsArray = ($topshelfExePaths -split ',').Trim()
 
-$servicePassword = $servicePassword.Replace('`', '``').Replace('"', '`"').Replace('$', '`$')
-$instanceName = $instanceName.Replace('`', '``').Replace('"', '`"').Replace('$', '`$')
+$servicePassword = $servicePassword.Replace('`', '``').Replace('"', '`"').Replace('$', '`$').Replace('&', '`&')
+$instanceName = $instanceName.Replace('`', '``').Replace('"', '`"').Replace('$', '`$').Replace('&', '`&')
 
 $additionalArguments = ""
 if (-Not [string]::IsNullOrWhiteSpace($serviceUsername))
