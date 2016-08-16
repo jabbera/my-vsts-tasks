@@ -1,8 +1,8 @@
 {
-    "id": "601CD43E-B65D-49B7-B118-091333BD5B9F",
-    "name": "StopWindowsService",
-    "friendlyName": "Stop Windows Service",
-    "description": "Stop a windows service.",
+    "id": "762A1A9C-A8B0-4EC2-993F-42DBBB09FFBD",
+    "name": "GrantLogonAsAServiceRight",
+    "friendlyName": "Grant Logon As A Service Right",
+    "description": "Grant logon as a service.",
     "helpMarkDown": "Version: {{tokens.BuildNumber}} [More Information](https://github.com/jabbera/my-vsts-tasks)",
     "category": "Utility",
     "visibility": [
@@ -18,12 +18,12 @@
     "minimumAgentVersion": "1.95.0",	
     "inputs": [
         {
-            "name": "ServiceNames",
+            "name": "UserNames",
             "type": "multiLine",
-            "label": "Service Names",
+            "label": "User Names",
             "defaultValue": "",
             "required": true,
-            "helpMarkDown": "The name of the windows service to stop. Comma separate to stop multiple." 
+            "helpMarkDown": "The usernames to grant logon as a service with the domain appended." 
         },
         {
             "name": "EnvironmentName",
@@ -50,27 +50,6 @@
             "helpMarkDown": "Password for administrator login for the target machines. <br>It can accept variable defined in Build/Release definitions as '$(passwordVariable)'. <br>You may mark variable type as 'secret' to secure it. "
         },
 		{
-		  "name": "StartupType",
-		  "type": "radio",
-		  "label": "Service Startup Type",
-		  "required": false,
-		  "defaultValue": "Disabled",
-		  "options": {
-			"Disabled": "Disabled",
-			"Manual": "Manual",
-			"Automatic": "Automatic"
-		  },
-		  "helpMarkDown": "Select the startup type for the service."
-		},
-		{
-            "name": "WaitTimeoutInSeconds",
-            "type": "string",
-            "label": "Wait timeout",
-            "defaultValue": "120",
-            "required": true,
-            "helpMarkDown": "Amount of time in seconds to wait for the service to start"
-        },
-		{
             "name": "protocol",
             "type": "radio",
             "label": "Protocol",
@@ -90,20 +69,12 @@
             "visibleRule": "protocol = Https",
             "required": false,
             "helpMarkDown": "Select the option to skip validating the authenticity of the machine's certificate from a trusted certification authority. The parameter is required for the WinRM HTTPS protocol."
-        },
-        {
-            "name": "KillIfTimedOut",
-            "type": "boolean",
-            "label": "Kill service if stop fails",
-            "defaultValue": "true",
-            "required": true,
-            "helpMarkDown": "Select this option for force terminate the service if the stop fails."
         }
     ],
-    "instanceNameFormat": "Stop Windows Service: $(ServiceNames)",
+    "instanceNameFormat": "Grant Logon As A Service: $(UserNames)",
     "execution": {
         "PowerShell": {
-            "target": "$(currentDirectory)\\StopWindowsService.ps1",
+            "target": "$(currentDirectory)\\GrantLogonAsAServiceRight.ps1",
             "argumentFormat": "",
             "workingDirectory": "$(currentDirectory)"
         }

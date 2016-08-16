@@ -7,10 +7,11 @@ param(
 	[string][Parameter(Mandatory=$true)][ValidateSet("Disabled", "Manual", "Automatic")] $startupType,
     [string][Parameter(Mandatory=$true)] $protocol,
     [string][Parameter(Mandatory=$true)] $testCertificate,
-    [string][Parameter(Mandatory=$true)] $waitTimeoutInSeconds
+    [string][Parameter(Mandatory=$true)] $waitTimeoutInSeconds,
+	[string][Parameter(Mandatory=$true)] $killIfTimedOut
 )
 
-Write-Output "Stopping Windows Service: $serviceName and setting startup type to: $startupType. Version: {{tokens.BuildNumber}}"
+Write-Output "Stopping Windows Service: $serviceName and setting startup type to: $startupType. Kill: $killIfTimedOut Version: {{tokens.BuildNumber}}"
 
 $env:CURRENT_TASK_ROOTDIR = Split-Path -Parent $MyInvocation.MyCommand.Path
 
@@ -18,4 +19,4 @@ $env:CURRENT_TASK_ROOTDIR = Split-Path -Parent $MyInvocation.MyCommand.Path
 
 $serviceNames = $serviceNames -replace '\s','' # no spaces allows in argument lists
 
-Remote-ServiceStartStop -serviceNames $serviceNames -environmentName $environmentName -adminUserName $adminUserName -adminPassword $adminPassword -startupType $startupType -protocol $protocol -testCertificate $testCertificate -waitTimeoutInSeconds $waitTimeoutInSeconds -internStringFileName "StopWindowsServiceIntern.ps1"
+Remote-ServiceStartStop -serviceNames $serviceNames -environmentName $environmentName -adminUserName $adminUserName -adminPassword $adminPassword -startupType $startupType -protocol $protocol -testCertificate $testCertificate -waitTimeoutInSeconds $waitTimeoutInSeconds -internStringFileName "StopWindowsServiceIntern.ps1" -killIfTimedOut $killIfTimedOut

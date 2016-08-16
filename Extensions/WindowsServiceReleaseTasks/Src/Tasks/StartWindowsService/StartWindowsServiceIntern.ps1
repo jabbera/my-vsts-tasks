@@ -1,7 +1,8 @@
 param(
     [string][Parameter(Mandatory=$true)][ValidateNotNullOrEmpty()] $serviceNames,
 	[string][Parameter(Mandatory=$true)][ValidateSet("Manual", "Automatic")] $startupType,
-	[int][Parameter(Mandatory=$true)] $waitTimeoutInSeconds
+	[int][Parameter(Mandatory=$true)] $waitTimeoutInSeconds,
+	[string][Parameter(Mandatory=$true)] $killIfTimedOut
 )
 
 [string[]] $servicesNamesArray = ($serviceNames -split ',').Trim()

@@ -32,15 +32,36 @@ function Remote-ServiceStartStop()
         [string][Parameter(Mandatory=$true)] $protocol,
         [string][Parameter(Mandatory=$true)] $testCertificate,
         [string][Parameter(Mandatory=$true)] $waitTimeoutInSeconds,
-        [string][Parameter(Mandatory=$true)] $internStringFileName
+        [string][Parameter(Mandatory=$true)] $internStringFileName,
+		[string][Parameter(Mandatory=$true)] $killIfTimedOut
     )
 
     Validate-WaitTime $waitTimeoutInSeconds
+	
+    $scriptArguments = "-serviceNames $serviceNames -startupType $startupType -waitTimeoutInSeconds $waitTimeoutInSeconds -killIfTimedOut $killIfTimedOut"
+	
+	Write-Host "ScriptArguments: $scriptArguments"
+	
+	Remote-RunScript -environmentName $environmentName -adminUserName $adminUserName -adminPassword $adminPassword -protocol $protocol -testCertificate $testCertificate -internStringFileName $internStringFileName -scriptArguments $scriptArguments
+}
 
+function Remote-RunScript()
+{
+    [CmdletBinding()]
+    Param
+    (
+        [string][Parameter(Mandatory=$true)][ValidateNotNullOrEmpty()] $environmentName,
+        [string][Parameter(Mandatory=$true)][ValidateNotNullOrEmpty()] $adminUserName,
+        [string][Parameter(Mandatory=$true)][ValidateNotNullOrEmpty()] $adminPassword,
+        [string][Parameter(Mandatory=$true)] $protocol,
+        [string][Parameter(Mandatory=$true)] $testCertificate,
+        [string][Parameter(Mandatory=$true)] $internStringFileName,
+		[string][Parameter(Mandatory=$true)] $scriptArguments
+    )
+	
     $internScriptPath = "$env:CURRENT_TASK_ROOTDIR\$internStringFileName"
 
     $scriptToRun = [IO.File]::ReadAllText($internScriptPath)
-    $scriptArguments = "-serviceNames $serviceNames -startupType $startupType -waitTimeoutInSeconds $waitTimeoutInSeconds"
 
     Write-Output "Invoking deployment"
 
