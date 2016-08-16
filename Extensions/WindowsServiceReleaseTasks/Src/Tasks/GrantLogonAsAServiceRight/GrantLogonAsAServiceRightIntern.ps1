@@ -8,7 +8,6 @@ function New-TemporaryDirectory {
     New-Item -ItemType Directory -Path (Join-Path $parent $name)
 }
 
-
 [string[]] $userNamesArray = ($userNames -split ',').Trim()
 
 foreach ($userName in $userNamesArray) 
@@ -29,7 +28,7 @@ foreach ($userName in $userNamesArray)
 	if($sidstring)
 	{
 		$newSids = $sids + $sidstring
-		Write-Host "New Sids: $newSids"
+		Write-Verbose "New Sids: $newSids"
 		$tempinf = Get-Content $tempDir\tempexport.inf
 		$tempinf = $tempinf.Replace($Sids,$newSids)
 		Add-Content -Path $tempDir\tempimport.inf -Value $tempinf
@@ -38,7 +37,7 @@ foreach ($userName in $userNamesArray)
 	}
 	else
 	{
-		Write-Host "No new sids"
+		Write-Verbose "No new sids"
 	}
 
 	del "$tempDir" -Recurse -force -ErrorAction SilentlyContinue
