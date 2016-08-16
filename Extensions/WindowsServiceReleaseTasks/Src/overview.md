@@ -13,9 +13,16 @@ This extension contains tasks to start and stop windows services as well as chan
 	
 	Can be used to call executables that use [TopShelf](http://topshelf-project.com/) and install them as a service.
 
+4. **Grant Logon As A Service Right**
+
+	Topshelf handles this for you, but if you are winging it, you'll need this.
+	
 Note: 1.16153.1 includes breaking changes from version 0.0.*. You will need to resave your builds\releases after installing. 
 
 Primary Changes include:
+
+ * New task: Grant logon as a service
+ * Ability to kill service if it doesn't stop in time
 
  * Removing DSC in favor of remote powershell execution via Invoke-RemoteDeployment
  * Allowing multiple services\exe by  comma separating them
