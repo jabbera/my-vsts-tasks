@@ -16,6 +16,6 @@ $env:CURRENT_TASK_ROOTDIR = Split-Path -Parent $MyInvocation.MyCommand.Path
 
 . $env:CURRENT_TASK_ROOTDIR\Utility.ps1
 
-$serviceNames = $serviceNames -replace '\s','' # no spaces allows in argument lists
+$serviceNames = '"' + $serviceNames + '"'
 
 Remote-ServiceStartStop -serviceNames $serviceNames -environmentName $environmentName -adminUserName $adminUserName -adminPassword $adminPassword -startupType $startupType -protocol $protocol -testCertificate $testCertificate -waitTimeoutInSeconds $waitTimeoutInSeconds -internStringFileName "StartWindowsServiceIntern.ps1" -killIfTimedOut "false"

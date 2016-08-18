@@ -5,7 +5,7 @@ param(
 	[string][Parameter(Mandatory=$true)] $killIfTimedOut
 )
 
-[string[]] $servicesNamesArray = ($serviceNames -split ',').Trim()
+[string[]] $servicesNamesArray = ($serviceNames -split ',' -replace '"').Trim()
 $presentServicesArray = Get-Service | Where-Object { $servicesNamesArray -contains $_.Name }
 
 if ($servicesNamesArray.Length -ne $presentServicesArray.Length)
