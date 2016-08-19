@@ -39,7 +39,7 @@ Catch
 
     $nonStoppedServices = $presentServicesArray | Where-Object { $_.Status -ne "Stopped" } | % { $_.ServiceName }
 
-    $nonStoppedServices | % { Write-Host "Killing service after not stopping within timeout: $_" }
+    $nonStoppedServices | % { Write-Verbose "Killing service after not stopping within timeout: $_" }
 
     (get-wmiobject win32_Service | Where-Object { $nonStoppedServices -contains $_.Name }).ProcessID | % { Stop-Process -Force $_ }
 }

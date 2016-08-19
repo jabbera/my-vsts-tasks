@@ -1,7 +1,7 @@
 {
   "tokens":{
 	"Major": 1,
-	"Patch": 19
+	"Patch": 0
   },
   "prefix" : "{{",
   "suffix" : "}}"
