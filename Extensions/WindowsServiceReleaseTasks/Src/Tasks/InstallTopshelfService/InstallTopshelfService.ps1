@@ -37,7 +37,8 @@ if (-Not [string]::IsNullOrWhiteSpace($instanceName))
 	$additionalArguments += " -instance:$instanceName"
 }
 
-$cmd = ""
+$cmd = "`$env:DT_DISABLEINITIALLOGGING='true'`n"
+$cmd += "`$env:DT_LOGLEVELCON='NONE'`n"
 
 foreach($topShelfExe in $topshelfExePathsArray)
 {
