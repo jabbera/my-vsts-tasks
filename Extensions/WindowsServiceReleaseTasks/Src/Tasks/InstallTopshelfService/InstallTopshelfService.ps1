@@ -10,7 +10,8 @@ param(
 	[string] $serviceUsername,
     [string] $servicePassword,
     [string] $instanceName,
-	[string] $uninstallFirst
+	[string] $uninstallFirst,
+	[string] $killMmcTaskManager
 )
 
 Write-Output "Installing TopShelf service: $topshelfExePaths with instanceName: $instanceName. Version: {{tokens.BuildNumber}}"
@@ -39,6 +40,11 @@ if (-Not [string]::IsNullOrWhiteSpace($instanceName))
 
 $cmd = "`$env:DT_DISABLEINITIALLOGGING='true'`n"
 $cmd += "`$env:DT_LOGLEVELCON='NONE'`n"
+
+if ($killMmcTaskManager -eq "true")
+{
+	$cmd += "& Stop-Process -name mmc,taskmgr -Force`n"
+}
 
 foreach($topShelfExe in $topshelfExePathsArray)
 {

@@ -117,6 +117,15 @@
             "defaultValue": "true",
             "required": true,
             "helpMarkDown": "Check to uninstall the services before installation, effectivly resetting any manual changes. This will also stop services if running. (not reccomend as timeout it not controllable)"
+        },
+        {
+            "name": "KillMmcTaskManager",
+            "type": "boolean",
+            "label": "Before uninstall kill all mmc\\taskmgr",
+            "defaultValue": "false",
+			"visibleRule": "UninstallFirst = true",
+            "required": true,
+            "helpMarkDown": "Check to make the task kill all open instances of mmc and taskmgr in an attempt to avoid the dreaded: The specified service has been marked for deletion. See: http://stackoverflow.com/questions/20561990/how-to-solve-the-specified-service-has-been-marked-for-deletion-error"
         }
     ],
     "instanceNameFormat": "Install a Topshelf Service: $(TopshelfExePaths)",
