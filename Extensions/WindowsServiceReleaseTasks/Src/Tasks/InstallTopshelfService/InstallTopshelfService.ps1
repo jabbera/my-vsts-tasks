@@ -43,7 +43,7 @@ $cmd += "`$env:DT_LOGLEVELCON='NONE'`n"
 
 if ($killMmcTaskManager -eq "true")
 {
-	$cmd += "& Stop-Process -name mmc,taskmgr -Force`n"
+	$cmd += "Stop-Process -name mmc,taskmgr -Force -ErrorAction SilentlyContinue`n"
 }
 
 foreach($topShelfExe in $topshelfExePathsArray)
