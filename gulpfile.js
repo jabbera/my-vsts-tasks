@@ -69,7 +69,7 @@ var createVsixPackage = function(extensionName) {
     var extnManifestPath = path.join(extnBuildRoot, extensionName, "Src");
     del(extnOutputPath);
     shell.mkdir("-p", extnOutputPath);
-    var packagingCmd = "tfx extension create --manifeset-globs vss-extension.json --root " + extnManifestPath + " --output-path " + extnOutputPath;
+    var packagingCmd = "node_modules\\.bin\\tfx extension create --manifeset-globs vss-extension.json --root " + extnManifestPath + " --output-path " + extnOutputPath;
     executeCommand(packagingCmd, function() {});
 }
 
