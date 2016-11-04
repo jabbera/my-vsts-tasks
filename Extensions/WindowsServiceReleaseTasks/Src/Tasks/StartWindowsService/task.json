@@ -93,7 +93,7 @@
     ],
     "instanceNameFormat": "Start Windows Service: $(ServiceNames)",
     "execution": {
-        "PowerShell": {
+        "PowerShell3": {
             "target": "$(currentDirectory)\\StartWindowsService.ps1",
             "argumentFormat": "",
             "workingDirectory": "$(currentDirectory)"

@@ -130,7 +130,7 @@
     ],
     "instanceNameFormat": "Install a Topshelf Service: $(TopshelfExePaths)",
     "execution": {
-        "PowerShell": {
+        "PowerShell3": {
             "target": "$(currentDirectory)\\InstallTopshelfService.ps1",
             "argumentFormat": "",
             "workingDirectory": "$(currentDirectory)"

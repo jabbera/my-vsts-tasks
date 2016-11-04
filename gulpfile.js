@@ -8,21 +8,29 @@ var fs = require('fs-extra');
 var pkgm = require('./package');
 var replace = require('gulp-token-replace');
 var debug = require('gulp-debug');
+var chmod = require('gulp-chmod');
 
 var buildRoot = "_build";
 var packageRoot = "_package";
 var extnBuildRoot = "_build/Extensions/";
 var sourcePaths = "Extensions/**/*";
-		
+var vstsTaskSdkPath = "node_modules/vsts-task-sdk/VstsTaskSdk/**/*";
+var commonSrc = "Extensions/Common";
+
 gulp.task("clean", function() {
     return del([buildRoot, packageRoot]);
 });
 
 gulp.task("compile", ["clean"], function(done) {
-    return gulp.src(sourcePaths, { base: "." }).pipe(gulp.dest(buildRoot));
+    return gulp.src(sourcePaths, { base: "." }).pipe(chmod(666)).pipe(gulp.dest(buildRoot));
 });
 
-gulp.task("build", ["compile"], function() {
+gulp.task("copyPowershellModulesToCommon", ["compile"], function (done) {
+    var dest = path.join(extnBuildRoot, 'Common', 'VstsTaskSdk', 'Src');
+    return gulp.src(vstsTaskSdkPath, { base: "node_modules/vsts-task-sdk" }).pipe(gulp.dest(dest));
+});
+
+gulp.task("build", ["copyPowershellModulesToCommon"], function () {
     //Foreach task under extensions copy common modules
     fs.readdirSync(extnBuildRoot).filter(function (file) {
         return fs.statSync(path.join(extnBuildRoot, file)).isDirectory() && file != "Common";
@@ -57,9 +65,9 @@ gulp.task("token-replace-bootstrap", ["build"], function(){
 var copyCommonModules = function(extensionName) {
 
     var commonDeps = require('./common.json');
-    var commonSrc = path.join(__dirname, 'Extensions/Common');
+    var commonSrc = path.join(__dirname, extnBuildRoot, 'Common');
+    
     var currentExtnRoot = path.join(__dirname, extnBuildRoot, extensionName);
-
     return gulp.src(path.join(currentExtnRoot, '**/task.json'))
         .pipe(pkgm.copyCommonModules(currentExtnRoot, commonDeps, commonSrc));
 }

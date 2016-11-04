@@ -73,7 +73,7 @@
     ],
     "instanceNameFormat": "Grant Logon As A Service: $(UserNames)",
     "execution": {
-        "PowerShell": {
+        "PowerShell3": {
             "target": "$(currentDirectory)\\GrantLogonAsAServiceRight.ps1",
             "argumentFormat": "",
             "workingDirectory": "$(currentDirectory)"

@@ -102,7 +102,7 @@
     ],
     "instanceNameFormat": "Stop Windows Service: $(ServiceNames)",
     "execution": {
-        "PowerShell": {
+        "PowerShell3": {
             "target": "$(currentDirectory)\\StopWindowsService.ps1",
             "argumentFormat": "",
             "workingDirectory": "$(currentDirectory)"

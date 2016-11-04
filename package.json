@@ -13,12 +13,14 @@
     "del": "^2.2.0",
     "fs-extra": "^0.28.0",
     "gulp": "^3.9.0",
+    "gulp-chmod": "^1.3.0",
     "gulp-debug": "^2.1.2",
     "gulp-token-replace": "^1.0.3",
     "gulp-util": "^3.0.7",
     "q": "^1.4.1",
     "shelljs": "^0.6.0",
     "through2": "^2.0.1",
-    "validator": "^5.2.0"
+    "validator": "^5.2.0",
+    "vsts-task-sdk": "^0.6.4"
   }
 }

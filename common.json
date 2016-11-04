@@ -7,7 +7,11 @@
 		{
             "module": "DeploymentSDK",
             "dest": "DeploymentSDK"
-        }
+        },
+		{
+			"module": "VstsTaskSdk",
+			"dest": "ps_modules"
+		}
     ],
 	"StopWindowsService": [
         {
@@ -17,7 +21,11 @@
 		{
             "module": "DeploymentSDK",
             "dest": "DeploymentSDK"
-        }
+        },
+		{
+			"module": "VstsTaskSdk",
+			"dest": "ps_modules"
+		}
     ],
 	"GrantLogonAsAServiceRight": [
         {
@@ -27,12 +35,20 @@
 		{
             "module": "DeploymentSDK",
             "dest": "DeploymentSDK"
-        }
+        },
+		{
+			"module": "VstsTaskSdk",
+			"dest": "ps_modules"
+		}
     ],
 	"InstallTopshelfService": [
 		{
             "module": "DeploymentSDK",
             "dest": "DeploymentSDK"
-        }
+        },
+		{
+			"module": "VstsTaskSdk",
+			"dest": "ps_modules"
+		}
 	]
 }
