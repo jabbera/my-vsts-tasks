@@ -14,6 +14,8 @@ param(
 	[string] $killMmcTaskManager
 )
 
+Import-Module $env:CURRENT_TASK_ROOTDIR\DeploymentSDK\InvokeRemoteDeployment.ps1
+
 Write-Output "Installing TopShelf service: $topshelfExePaths with instanceName: $instanceName. Version: {{tokens.BuildNumber}}"
 
 $env:CURRENT_TASK_ROOTDIR = Split-Path -Parent $MyInvocation.MyCommand.Path
@@ -59,11 +61,9 @@ foreach($topShelfExe in $topshelfExePathsArray)
 	$cmd += "& ""$topShelfExe"" install $additionalArguments`n"
 }
 
-$santizedCmd = $cmd -replace "-password:$servicePassword", "-password:**********"
+Write-Output "CMD: $cmd"
 
-Write-Output "CMD: $santizedCmd"
-
-$errorMessage = Invoke-RemoteDeployment -environmentName $environmentName -tags "" -ScriptBlockContent $cmd -scriptArguments "" -runPowershellInParallel $false -adminUserName $adminUserName -adminPassword $adminPassword -protocol $protocol -testCertificate $testCertificate
+$errorMessage = Invoke-RemoteDeployment -machinesList $environmentName -scriptToRun $cmd -deployInParallel $false -adminUserName $adminUserName -adminPassword $adminPassword -protocol $protocol -testCertificate $testCertificate
 
 if(-Not [string]::IsNullOrEmpty($errorMessage))
 {

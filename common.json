@@ -3,18 +3,36 @@
         {
             "module": "Helper",
             "dest": ""
+        },
+		{
+            "module": "DeploymentSDK",
+            "dest": "DeploymentSDK"
         }
     ],
 	"StopWindowsService": [
         {
             "module": "Helper",
             "dest": ""
+        },
+		{
+            "module": "DeploymentSDK",
+            "dest": "DeploymentSDK"
         }
     ],
 	"GrantLogonAsAServiceRight": [
         {
             "module": "Helper",
             "dest": ""
+        },
+		{
+            "module": "DeploymentSDK",
+            "dest": "DeploymentSDK"
         }
-    ]
+    ],
+	"InstallTopshelfService": [
+		{
+            "module": "DeploymentSDK",
+            "dest": "DeploymentSDK"
+        }
+	]
 }

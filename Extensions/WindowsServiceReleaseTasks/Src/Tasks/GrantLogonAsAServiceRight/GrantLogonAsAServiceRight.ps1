@@ -18,4 +18,4 @@ $userNames = $userNames -replace '\s','' # no spaces allows in argument lists
 
 $scriptArguments = "-userNames $userNames"
 
-Remote-RunScript -environmentName $environmentName -adminUserName $adminUserName -adminPassword $adminPassword -protocol $protocol -testCertificate $testCertificate -internStringFileName "GrantLogonAsAServiceRightIntern.ps1" -scriptArguments $scriptArguments
+Remote-RunScript -machinesList $environmentName -adminUserName $adminUserName -adminPassword $adminPassword -protocol $protocol -testCertificate $testCertificate -internStringFileName "GrantLogonAsAServiceRightIntern.ps1" -scriptEntryPoint "GrantLogonAsService" -scriptArguments $scriptArguments

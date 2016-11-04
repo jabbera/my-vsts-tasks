@@ -1,3 +1,7 @@
+Import-Module $env:CURRENT_TASK_ROOTDIR\DeploymentSDK\InvokeRemoteDeployment.ps1
+
+Write-Verbose "Entering script Utility.ps1"
+
 function Validate-WaitTime()
 {
 	[CmdletBinding()]
@@ -25,7 +29,7 @@ function Remote-ServiceStartStop()
     Param
     (
         [string][Parameter(Mandatory=$true)][ValidateNotNullOrEmpty()] $serviceNames,
-        [string][Parameter(Mandatory=$true)][ValidateNotNullOrEmpty()] $environmentName,
+        [string][Parameter(Mandatory=$true)][ValidateNotNullOrEmpty()] $machinesList,
         [string][Parameter(Mandatory=$true)][ValidateNotNullOrEmpty()] $adminUserName,
         [string][Parameter(Mandatory=$true)][ValidateNotNullOrEmpty()] $adminPassword,
 	    [string][Parameter(Mandatory=$true)][ValidateSet("Disabled", "Manual", "Automatic")] $startupType,
@@ -42,7 +46,7 @@ function Remote-ServiceStartStop()
 	
 	Write-Host "ScriptArguments: $scriptArguments"
 	
-	Remote-RunScript -environmentName $environmentName -adminUserName $adminUserName -adminPassword $adminPassword -protocol $protocol -testCertificate $testCertificate -internStringFileName $internStringFileName -scriptArguments $scriptArguments
+	Remote-RunScript -machinesList $machinesList -adminUserName $adminUserName -adminPassword $adminPassword -protocol $protocol -testCertificate $testCertificate -internStringFileName $internStringFileName -scriptEntryPoint "StartStopServices" -scriptArguments $scriptArguments
 }
 
 function Remote-RunScript()
@@ -50,22 +54,27 @@ function Remote-RunScript()
     [CmdletBinding()]
     Param
     (
-        [string][Parameter(Mandatory=$true)][ValidateNotNullOrEmpty()] $environmentName,
+        [string][Parameter(Mandatory=$true)][ValidateNotNullOrEmpty()] $machinesList,
         [string][Parameter(Mandatory=$true)][ValidateNotNullOrEmpty()] $adminUserName,
         [string][Parameter(Mandatory=$true)][ValidateNotNullOrEmpty()] $adminPassword,
         [string][Parameter(Mandatory=$true)] $protocol,
         [string][Parameter(Mandatory=$true)] $testCertificate,
         [string][Parameter(Mandatory=$true)] $internStringFileName,
+		[string][Parameter(Mandatory=$true)] $scriptEntryPoint,
 		[string][Parameter(Mandatory=$true)] $scriptArguments
     )
 	
     $internScriptPath = "$env:CURRENT_TASK_ROOTDIR\$internStringFileName"
 
-    $scriptToRun = [IO.File]::ReadAllText($internScriptPath)
+	$scriptToRun = Get-Content $internScriptPath | Out-String
+     
+    $scriptToRun = [string]::Format("{0} {1} {2} {3} ", $scriptToRun,  [Environment]::NewLine, $scriptEntryPoint, $scriptArguments)
 
     Write-Output "Invoking deployment"
+	
+	Write-Output "Script Body: $scriptToRun"
 
-    $errorMessage = Invoke-RemoteDeployment -environmentName $environmentName -tags "" -ScriptBlockContent $scriptToRun -scriptArguments $scriptArguments -runPowershellInParallel $false -adminUserName $adminUserName -adminPassword $adminPassword -protocol $protocol -testCertificate $testCertificate
+    $errorMessage = Invoke-RemoteDeployment -machinesList $machinesList -scriptToRun  $scriptToRun -deployInParallel  $false -adminUserName $adminUserName -adminPassword $adminPassword -protocol $protocol -testCertificate $testCertificate
 
     if(-Not [string]::IsNullOrEmpty($errorMessage))
     {
