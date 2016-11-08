@@ -110,6 +110,20 @@
             "required": false,
             "helpMarkDown": "An instance name if neccessary."
         },
+		{
+		  "name": "StartupType",
+		  "type": "radio",
+		  "label": "Service Startup Type",
+		  "required": false,
+		  "defaultValue": "default",
+		  "options": {
+			"default": "Default",
+			"manual": "Manual",
+			"autostart": "Automatic",
+			"disabled": "Disabled"
+		  },
+		  "helpMarkDown": "Select the startup type for the service."
+		},
         {
             "name": "UninstallFirst",
             "type": "boolean",

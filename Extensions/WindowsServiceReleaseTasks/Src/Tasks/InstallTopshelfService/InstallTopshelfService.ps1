@@ -16,6 +16,7 @@ Try
 	[string]$serviceUsername = Get-VstsInput -Name serviceUsername
     [string]$servicePassword = Get-VstsInput -Name servicePassword
     [string]$instanceName = Get-VstsInput -Name instanceName
+	[string]$startupType = Get-VstsInput -Name startupType -Default "default"
 	[string]$uninstallFirst = Get-VstsInput -Name uninstallFirst
 	[string]$killMmcTaskManager = Get-VstsInput -Name killMmcTaskManager
 
@@ -35,21 +36,27 @@ Try
 
 	$instanceName = $instanceName.Replace('`', '``').Replace('"', '`"').Replace('$', '`$').Replace('&', '`&')
 
-	$additionalArguments = ""
+	$additionalSharedArguments = ""
 	if (-Not [string]::IsNullOrWhiteSpace($serviceUsername))
 	{
-		$additionalArguments += " -username:$serviceUsername -password:$servicePassword"
+		$additionalSharedArguments += " -username:$serviceUsername -password:$servicePassword"
 	}
 	else
 	{
-		$additionalArguments += " --$specialUser"
+		$additionalSharedArguments += " --$specialUser"
 	}
 
 	if (-Not [string]::IsNullOrWhiteSpace($instanceName))
 	{
-		$additionalArguments += " -instance:$instanceName"
+		$additionalSharedArguments += " -instance:$instanceName"
 	}
-
+	
+	$additonalInstallArguments = ""
+	if ($startupType -ne "default")
+	{
+		$additonalInstallArguments = "--$startupType"
+	}
+	
 	$cmd = "`$env:DT_DISABLEINITIALLOGGING='true'`n"
 	$cmd += "`$env:DT_LOGLEVELCON='NONE'`n"
 
@@ -62,10 +69,10 @@ Try
 	{
 		if ($uninstallFirst -eq "true")
 		{
-			$cmd += "& ""$topShelfExe"" uninstall $additionalArguments`n"
+			$cmd += "& ""$topShelfExe"" uninstall $additionalSharedArguments`n"
 		}
 		
-		$cmd += "& ""$topShelfExe"" install $additionalArguments`n"
+		$cmd += "& ""$topShelfExe"" install $additionalSharedArguments $additonalInstallArguments`n"
 	}
 
 	Write-Output "CMD: $cmd"
