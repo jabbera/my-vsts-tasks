@@ -37,7 +37,8 @@ function Remote-ServiceStartStop()
         [string][Parameter(Mandatory=$true)] $testCertificate,
         [string][Parameter(Mandatory=$true)] $waitTimeoutInSeconds,
         [string][Parameter(Mandatory=$true)] $internStringFileName,
-		[string][Parameter(Mandatory=$true)] $killIfTimedOut
+		[string][Parameter(Mandatory=$true)] $killIfTimedOut,
+		[bool]$runPowershellInParallel
     )
 
     Validate-WaitTime $waitTimeoutInSeconds
@@ -46,7 +47,7 @@ function Remote-ServiceStartStop()
 	
 	Write-Host "ScriptArguments: $scriptArguments"
 	
-	Remote-RunScript -machinesList $machinesList -adminUserName $adminUserName -adminPassword $adminPassword -protocol $protocol -testCertificate $testCertificate -internStringFileName $internStringFileName -scriptEntryPoint "StartStopServices" -scriptArguments $scriptArguments
+	Remote-RunScript -machinesList $machinesList -adminUserName $adminUserName -adminPassword $adminPassword -protocol $protocol -testCertificate $testCertificate -internStringFileName $internStringFileName -scriptEntryPoint "StartStopServices" -scriptArguments $scriptArguments -runPowershellInParallel $runPowershellInParallel
 }
 
 function Remote-RunScript()
@@ -61,7 +62,8 @@ function Remote-RunScript()
         [string][Parameter(Mandatory=$true)] $testCertificate,
         [string][Parameter(Mandatory=$true)] $internStringFileName,
 		[string][Parameter(Mandatory=$true)] $scriptEntryPoint,
-		[string][Parameter(Mandatory=$true)] $scriptArguments
+		[string][Parameter(Mandatory=$true)] $scriptArguments,
+		[bool]$runPowershellInParallel
     )
 	
     $internScriptPath = "$env:CURRENT_TASK_ROOTDIR\$internStringFileName"
@@ -74,7 +76,7 @@ function Remote-RunScript()
 	
 	Write-Output "Script Body: $scriptToRun"
 
-    $errorMessage = Invoke-RemoteDeployment -machinesList $machinesList -scriptToRun  $scriptToRun -deployInParallel  $false -adminUserName $adminUserName -adminPassword $adminPassword -protocol $protocol -testCertificate $testCertificate
+    $errorMessage = Invoke-RemoteDeployment -machinesList $machinesList -scriptToRun  $scriptToRun -deployInParallel  $runPowershellInParallel -adminUserName $adminUserName -adminPassword $adminPassword -protocol $protocol -testCertificate $testCertificate
 
     if(-Not [string]::IsNullOrEmpty($errorMessage))
     {

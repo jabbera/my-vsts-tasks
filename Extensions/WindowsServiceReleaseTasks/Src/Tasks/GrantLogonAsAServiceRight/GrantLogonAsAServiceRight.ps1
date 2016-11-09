@@ -11,7 +11,8 @@ Try
     [string]$adminPassword = Get-VstsInput -Name adminPassword -Require
     [string]$protocol = Get-VstsInput -Name protocol -Require
     [string]$testCertificate = Get-VstsInput -Name testCertificate -Require
-
+	[bool]$runPowershellInParallel = Get-VstsInput -Name RunPowershellInParallel -Default $true -AsBool
+	
 	Write-Output "Granting LogonAsAService to $userNames. Version: {{tokens.BuildNumber}}"
 
 	$env:CURRENT_TASK_ROOTDIR = Split-Path -Parent $MyInvocation.MyCommand.Path
@@ -22,7 +23,7 @@ Try
 
 	$scriptArguments = "-userNames $userNames"
 
-	Remote-RunScript -machinesList $environmentName -adminUserName $adminUserName -adminPassword $adminPassword -protocol $protocol -testCertificate $testCertificate -internStringFileName "GrantLogonAsAServiceRightIntern.ps1" -scriptEntryPoint "GrantLogonAsService" -scriptArguments $scriptArguments
+	Remote-RunScript -machinesList $environmentName -adminUserName $adminUserName -adminPassword $adminPassword -protocol $protocol -testCertificate $testCertificate -internStringFileName "GrantLogonAsAServiceRightIntern.ps1" -scriptEntryPoint "GrantLogonAsService" -scriptArguments $scriptArguments -runPowershellInParallel $runPowershellInParallel
 }
 finally
 {

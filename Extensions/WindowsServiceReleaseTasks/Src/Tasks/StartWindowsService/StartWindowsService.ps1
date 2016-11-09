@@ -13,7 +13,8 @@ Try
     [string]$protocol = Get-VstsInput -Name protocol -Require
     [string]$testCertificate = Get-VstsInput -Name testCertificate -Require
     [string]$waitTimeoutInSeconds = Get-VstsInput -Name waitTimeoutInSeconds -Require
-
+	[bool]$runPowershellInParallel = Get-VstsInput -Name RunPowershellInParallel -Default $true -AsBool
+	
 	Write-Output "Starting Windows Services $serviceNames and setting startup type to: $startupType. Version: {{tokens.BuildNumber}}"
 
 	$env:CURRENT_TASK_ROOTDIR = Split-Path -Parent $MyInvocation.MyCommand.Path
@@ -22,7 +23,7 @@ Try
 
 	$serviceNames = '"' + $serviceNames + '"'
 
-	Remote-ServiceStartStop -serviceNames $serviceNames -machinesList $environmentName -adminUserName $adminUserName -adminPassword $adminPassword -startupType $startupType -protocol $protocol -testCertificate $testCertificate -waitTimeoutInSeconds $waitTimeoutInSeconds -internStringFileName "StartWindowsServiceIntern.ps1" -killIfTimedOut "false"
+	Remote-ServiceStartStop -serviceNames $serviceNames -machinesList $environmentName -adminUserName $adminUserName -adminPassword $adminPassword -startupType $startupType -protocol $protocol -testCertificate $testCertificate -waitTimeoutInSeconds $waitTimeoutInSeconds -internStringFileName "StartWindowsServiceIntern.ps1" -killIfTimedOut "false" -runPowershellInParallel $runPowershellInParallel
 }
 finally
 {

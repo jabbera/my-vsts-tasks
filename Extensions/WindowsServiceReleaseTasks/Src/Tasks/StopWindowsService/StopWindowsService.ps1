@@ -14,6 +14,7 @@ Try
     [string]$testCertificate = Get-VstsInput -Name testCertificate -Require
     [string]$waitTimeoutInSeconds = Get-VstsInput -Name waitTimeoutInSeconds -Require
 	[string]$killIfTimedOut = Get-VstsInput -Name killIfTimedOut -Require
+	[bool]$runPowershellInParallel = Get-VstsInput -Name RunPowershellInParallel -Default $true -AsBool
 	
 	Write-Output "Stopping Windows Service: $serviceName and setting startup type to: $startupType. Kill: $killIfTimedOut Version: {{tokens.BuildNumber}}"
 
@@ -23,7 +24,7 @@ Try
 
 	$serviceNames = '"' + $serviceNames + '"'
 
-	Remote-ServiceStartStop -serviceNames $serviceNames -machinesList $environmentName -adminUserName $adminUserName -adminPassword $adminPassword -startupType $startupType -protocol $protocol -testCertificate $testCertificate -waitTimeoutInSeconds $waitTimeoutInSeconds -internStringFileName "StopWindowsServiceIntern.ps1" -killIfTimedOut $killIfTimedOut	
+	Remote-ServiceStartStop -serviceNames $serviceNames -machinesList $environmentName -adminUserName $adminUserName -adminPassword $adminPassword -startupType $startupType -protocol $protocol -testCertificate $testCertificate -waitTimeoutInSeconds $waitTimeoutInSeconds -internStringFileName "StopWindowsServiceIntern.ps1" -killIfTimedOut $killIfTimedOut	 -runPowershellInParallel $runPowershellInParallel
 }
 finally
 {

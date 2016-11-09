@@ -19,6 +19,7 @@ Try
 	[string]$startupType = Get-VstsInput -Name startupType -Default "default"
 	[string]$uninstallFirst = Get-VstsInput -Name uninstallFirst
 	[string]$killMmcTaskManager = Get-VstsInput -Name killMmcTaskManager
+	[bool]$runPowershellInParallel = Get-VstsInput -Name RunPowershellInParallel -Default $true -AsBool
 
 	$env:CURRENT_TASK_ROOTDIR = Split-Path -Parent $MyInvocation.MyCommand.Path
 
@@ -77,7 +78,7 @@ Try
 
 	Write-Output "CMD: $cmd"
 
-	$errorMessage = Invoke-RemoteDeployment -machinesList $environmentName -scriptToRun $cmd -deployInParallel $false -adminUserName $adminUserName -adminPassword $adminPassword -protocol $protocol -testCertificate $testCertificate
+	$errorMessage = Invoke-RemoteDeployment -machinesList $environmentName -scriptToRun $cmd -deployInParallel $runPowershellInParallel -adminUserName $adminUserName -adminPassword $adminPassword -protocol $protocol -testCertificate $testCertificate
 
 	if(-Not [string]::IsNullOrEmpty($errorMessage))
 	{

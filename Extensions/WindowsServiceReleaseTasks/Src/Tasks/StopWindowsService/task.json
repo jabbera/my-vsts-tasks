@@ -92,6 +92,14 @@
             "helpMarkDown": "Select the option to skip validating the authenticity of the machine's certificate from a trusted certification authority. The parameter is required for the WinRM HTTPS protocol."
         },
         {
+            "name": "RunPowershellInParallel",
+            "type": "boolean",
+            "label": "Run PowerShell in Parallel",
+            "defaultValue": "true",
+            "required": false,
+            "helpMarkDown": "Setting it to true will run the PowerShell scripts in parallel on the target machines."
+        },
+        {
             "name": "KillIfTimedOut",
             "type": "boolean",
             "label": "Kill service if stop fails",
