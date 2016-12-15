@@ -31,7 +31,7 @@ Try
 
 	[string[]] $topshelfExePathsArray = ($topshelfExePaths -split ',').Trim()
 
-	$servicePassword = $servicePassword.Replace('`', '``').Replace('"', '`"').Replace('$', '`$').Replace('&', '`&').Replace('''', '`''')
+	$servicePassword = $servicePassword.Replace('`', '``').Replace('"', '`"').Replace('$', '`$').Replace('&', '`&').Replace('''', '`''').Replace('(','`(').Replace(')','`)')
 
 	Write-Host ("##vso[task.setvariable variable=E34A69771F47424D9217F3A4D6BCDC94;issecret=true;]$servicePassword") # Make sure the password doesn't show up in the log.
 
