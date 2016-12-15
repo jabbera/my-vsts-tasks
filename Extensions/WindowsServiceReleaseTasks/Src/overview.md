@@ -17,16 +17,17 @@ This extension contains tasks to start and stop windows services as well as chan
 
 	Topshelf handles this for you, but if you are winging it, you'll need this.
 	
-Note: 1.16153.1 includes breaking changes from version 0.0.*. You will need to resave your builds\releases after installing. 
+Note: This release migrates to the VSTS sdk and includes some major enhancements\fixes.
 
 Primary Changes include:
 
- * New task: Grant logon as a service
- * Ability to kill service if it doesn't stop in time
-
- * Removing DSC in favor of remote powershell execution via Invoke-RemoteDeployment
- * Allowing multiple services\exe by  comma separating them
- * Relocation of the install task to Deploy from Utility
+ * Ability to kill all open mmc\taskmgr to attempt to avoid the: Service is pending deletion issue
+ * Proper escaping of passwords
+ * Support spaces and $ in service names
+ * Embed the DeploymentSdk and use that
+ * Support parallel running of tasks
+ * Chnage to the powershell 3 VSTS-SDK
+ 
 
 Icons made by [Google](http://www.flaticon.com/authors/google) [www.flaticon.com](http://www.flaticon.com) [CC 3.0 BY](http://creativecommons.org/licenses/by/3.0/)
 Icons made by [Freepik](http://www.freepik.com) [www.flaticon.com](http://www.flaticon.com) [CC 3.0 BY](http://creativecommons.org/licenses/by/3.0/)

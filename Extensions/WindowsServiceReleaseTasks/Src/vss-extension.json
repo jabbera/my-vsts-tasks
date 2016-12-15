@@ -96,7 +96,6 @@
         }
     ],
 	"galleryFlags": [
-		"Public",
-		"Preview"
+		"Public"
 	]
 }
