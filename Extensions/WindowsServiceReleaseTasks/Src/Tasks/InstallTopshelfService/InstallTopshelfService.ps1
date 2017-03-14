@@ -38,7 +38,7 @@ Try
 	$instanceName = $instanceName.Replace('`', '``').Replace('"', '`"').Replace('$', '`$').Replace('&', '`&')
 
 	$additionalSharedArguments = ""
-	if (-Not [string]::IsNullOrWhiteSpace($serviceUsername))
+	if ($specialUser -eq "custom")
 	{
 		$additionalSharedArguments += " -username:$serviceUsername -password:$servicePassword"
 	}
