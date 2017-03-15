@@ -118,6 +118,30 @@
             "required": false,
             "helpMarkDown": "An instance name if neccessary."
         },
+          {
+            "name": "ServiceName",
+            "type": "string",
+            "label": "Service Name",
+            "defaultValue": "",
+            "required": false,
+            "helpMarkDown": "An service name if neccessary."
+        },
+          {
+            "name": "DisplayName",
+            "type": "string",
+            "label": "Display Name",
+            "defaultValue": "",
+            "required": false,
+            "helpMarkDown": "An display name if neccessary."
+        },
+          {
+            "name": "Description",
+            "type": "string",
+            "label": "Service Description",
+            "defaultValue": "",
+            "required": false,
+            "helpMarkDown": "An service description if neccessary."
+        },
 		{
 		  "name": "StartupType",
 		  "type": "radio",

@@ -16,6 +16,9 @@ Try
 	[string]$serviceUsername = Get-VstsInput -Name serviceUsername
     [string]$servicePassword = Get-VstsInput -Name servicePassword
     [string]$instanceName = Get-VstsInput -Name instanceName
+	[string]$serviceName = Get-VstsInput -Name serviceName
+	[string]$displayName = Get-VstsInput -Name displayName
+	[string]$description = Get-VstsInput -Name description
 	[string]$startupType = Get-VstsInput -Name startupType -Default "default"
 	[string]$uninstallFirst = Get-VstsInput -Name uninstallFirst
 	[string]$killMmcTaskManager = Get-VstsInput -Name killMmcTaskManager
@@ -50,6 +53,18 @@ Try
 	if (-Not [string]::IsNullOrWhiteSpace($instanceName))
 	{
 		$additionalSharedArguments += " -instance:$instanceName"
+	}
+	if (-Not [string]::IsNullOrWhiteSpace($serviceName))
+	{
+		$additionalSharedArguments += " -servicename:$serviceName"
+	}
+	if (-Not [string]::IsNullOrWhiteSpace($displayName))
+	{
+		$additionalSharedArguments += " -displayname:$displayName"
+	}
+	if (-Not [string]::IsNullOrWhiteSpace($description))
+	{
+		$additionalSharedArguments += " -description:$description"
 	}
 	
 	$additonalInstallArguments = ""
