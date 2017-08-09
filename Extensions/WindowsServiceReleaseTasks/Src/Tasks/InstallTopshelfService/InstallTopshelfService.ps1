@@ -60,11 +60,11 @@ Try
 	}
 	if (-Not [string]::IsNullOrWhiteSpace($displayName))
 	{
-		$additionalSharedArguments += " -displayname:$displayName"
+		$additionalSharedArguments += " -displayname ""$displayName"""
 	}
 	if (-Not [string]::IsNullOrWhiteSpace($description))
 	{
-		$additionalSharedArguments += " -description:$description"
+		$additionalSharedArguments += " -description ""$description"""
 	}
 	
 	$additonalInstallArguments = ""
