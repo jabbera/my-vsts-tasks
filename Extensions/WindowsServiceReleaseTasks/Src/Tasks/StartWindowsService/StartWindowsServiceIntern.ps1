@@ -6,14 +6,30 @@ function StartStopServices(
 )
 {
 	[string[]] $servicesNamesArray = ($serviceNames -split ',' -replace '"').Trim()
-	$presentServicesArray = Get-Service | Where-Object { $servicesNamesArray -contains $_.Name }
 
-	if ($servicesNamesArray.Length -ne $presentServicesArray.Length)
+	[bool] $atLeastOneServiceWasNotFound = $false
+	[PSCustomObject[]] $presentServicesArray
+	$servicesNamesArray | ForEach-Object {
+		$serviceName = $_
+		$matchingServices = Get-Service -Name $serviceName
+
+		if ($matchingServices -eq $null)
+		{
+			Write-Error "No services match the name: $serviceName"
+			$atLeastOneServiceWasNotFound = $true
+		}
+		else
+		{
+			$presentServicesArray += $matchingServices
+		}
+	}
+
+	if ($atLeastOneServiceWasNotFound)
 	{
-		$missingServiceNames = $servicesNamesArray | Where-Object { $presentServicesArrayNames -notcontains $_ }
-		Write-Error "No such services: $missingServiceNames."
 		return -1;
 	}
+
+	Write-Verbose ("The following services were found: {0}" -f ($presentServicesArray -join ','))
 
 	$presentServicesArray | % { Set-Service -Name $_.Name -StartupType $startupType }
 	$presentServicesArray | Where-Object { $_.Status -ne "Running" } | % { $_.Start() }
