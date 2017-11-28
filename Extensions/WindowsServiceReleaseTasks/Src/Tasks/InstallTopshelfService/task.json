@@ -15,7 +15,7 @@
         "Minor": "{{tokens.Minor}}",
         "Patch": "{{tokens.Patch}}"
     },
-    "minimumAgentVersion": "1.95.0",	
+    "minimumAgentVersion": "1.95.0",
     "inputs": [
         {
             "name": "TopshelfExePaths",
@@ -23,7 +23,7 @@
             "label": "Topshelf Exe Paths",
             "defaultValue": "",
             "required": true,
-            "helpMarkDown": "Full path to topshelf executables. (Comma separated list)" 
+            "helpMarkDown": "Full path to topshelf executables. (Comma separated list)"
         },
         {
             "name": "EnvironmentName",
@@ -151,7 +151,8 @@
 		  "options": {
 			"default": "Default",
 			"manual": "Manual",
-			"autostart": "Automatic",
+            "autostart": "Automatic",
+            "delayed": "Automatic (Delayed)",
 			"disabled": "Disabled"
 		  },
 		  "helpMarkDown": "Select the startup type for the service."
