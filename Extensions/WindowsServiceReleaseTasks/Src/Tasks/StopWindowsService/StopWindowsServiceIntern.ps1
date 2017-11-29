@@ -10,7 +10,7 @@ function StartStopServices(
 	[PSCustomObject[]] $presentServicesArray
 	$servicesNamesArray | ForEach-Object {
 		$serviceName = $_
-		$matchingServices = Get-Service -Name $serviceName
+		$matchingServices = Get-Service -Name $serviceName -ErrorAction SilentlyContinue
 
 		if ($matchingServices -eq $null)
 		{
