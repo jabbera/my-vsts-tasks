@@ -6,18 +6,29 @@ function StartStopServices(
 )
 {
 	[string[]] $servicesNamesArray = ($serviceNames -split ',' -replace '"').Trim()
-	$presentServicesArray = Get-Service | Where-Object { $servicesNamesArray -contains $_.Name }
 
-	if ($servicesNamesArray.Length -ne $presentServicesArray.Length)
-	{
-		$missingServiceNames = $servicesNamesArray | Where-Object { $presentServicesArrayNames -notcontains $_ }
-		Write-Verbose "No such services: $missingServiceNames."
+	[PSCustomObject[]] $presentServicesArray
+	$servicesNamesArray | ForEach-Object {
+		$serviceName = $_
+		$matchingServices = Get-Service -Name $serviceName
+
+		if ($matchingServices -eq $null)
+		{
+			Write-Verbose "No services match the name: $serviceName"
+		}
+		else
+		{
+			$presentServicesArray += $matchingServices
+		}
 	}
 
 	if ($presentServicesArray.Length -eq 0)
 	{
+		Write-Verbose "No services matching the given names were found."
 		return
 	}
+
+	Write-Verbose ("The following services were found: {0}" -f ($presentServicesArray -join ','))
 
 	try
 	{
@@ -33,7 +44,7 @@ function StartStopServices(
 		if ($killIfTimedOut -eq "false")
 		{
 			$errorMessage = $_.Exception.Message
-			Write-Verbose $errorMessage		
+			Write-Verbose $errorMessage
 			throw
 		}
 
