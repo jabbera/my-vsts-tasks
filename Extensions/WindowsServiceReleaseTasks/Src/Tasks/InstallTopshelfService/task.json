@@ -15,7 +15,7 @@
         "Minor": "{{tokens.Minor}}",
         "Patch": "{{tokens.Patch}}"
     },
-    "minimumAgentVersion": "1.95.0",	
+    "minimumAgentVersion": "1.95.0",
     "inputs": [
         {
             "name": "TopshelfExePaths",
@@ -23,7 +23,7 @@
             "label": "Topshelf Exe Paths",
             "defaultValue": "",
             "required": true,
-            "helpMarkDown": "Full path to topshelf executables. (Comma separated list)" 
+            "helpMarkDown": "Full path to topshelf executables. (Comma separated list)"
         },
         {
             "name": "EnvironmentName",
@@ -49,7 +49,7 @@
             "required": true,
             "helpMarkDown": "Password for administrator login for the target machines. <br>It can accept variable defined in Build/Release definitions as '$(passwordVariable)'. <br>You may mark variable type as 'secret' to secure it. "
         },
-		{
+        {
             "name": "protocol",
             "type": "radio",
             "label": "Protocol",
@@ -78,7 +78,7 @@
             "required": false,
             "helpMarkDown": "Setting it to true will run the PowerShell scripts in parallel on the target machines."
         },
-		{
+        {
             "name": "specialUser",
             "type": "radio",
             "label": "Special User",
@@ -97,7 +97,7 @@
             "type": "string",
             "label": "Service Username",
             "defaultValue": "",
-			"visibleRule": "specialUser = custom",
+            "visibleRule": "specialUser = custom",
             "required": false,
             "helpMarkDown": "Username to run the service as."
         },
@@ -106,7 +106,7 @@
             "type": "string",
             "label": "Service Password",
             "defaultValue": "",
-			"visibleRule": "specialUser = custom",
+            "visibleRule": "specialUser = custom",
             "required": false,
             "helpMarkDown": "Password for the service account"
         },
@@ -118,7 +118,7 @@
             "required": false,
             "helpMarkDown": "An instance name if neccessary."
         },
-          {
+        {
             "name": "ServiceName",
             "type": "string",
             "label": "Service Name",
@@ -126,7 +126,7 @@
             "required": false,
             "helpMarkDown": "An service name if neccessary."
         },
-          {
+        {
             "name": "DisplayName",
             "type": "string",
             "label": "Display Name",
@@ -134,7 +134,7 @@
             "required": false,
             "helpMarkDown": "An display name if neccessary."
         },
-          {
+        {
             "name": "Description",
             "type": "string",
             "label": "Service Description",
@@ -142,20 +142,21 @@
             "required": false,
             "helpMarkDown": "An service description if neccessary."
         },
-		{
-		  "name": "StartupType",
-		  "type": "radio",
-		  "label": "Service Startup Type",
-		  "required": false,
-		  "defaultValue": "default",
-		  "options": {
-			"default": "Default",
-			"manual": "Manual",
-			"autostart": "Automatic",
-			"disabled": "Disabled"
-		  },
-		  "helpMarkDown": "Select the startup type for the service."
-		},
+        {
+            "name": "StartupType",
+            "type": "radio",
+            "label": "Service Startup Type",
+            "required": false,
+            "defaultValue": "default",
+            "options": {
+                "default": "Default",
+                "manual": "Manual",
+                "autostart": "Automatic",
+                "delayed": "Automatic (Delayed)",
+                "disabled": "Disabled"
+            },
+            "helpMarkDown": "Select the startup type for the service."
+        },
         {
             "name": "UninstallFirst",
             "type": "boolean",
@@ -169,7 +170,7 @@
             "type": "boolean",
             "label": "Before uninstall kill all mmc\\taskmgr",
             "defaultValue": "false",
-			"visibleRule": "UninstallFirst = true",
+            "visibleRule": "UninstallFirst = true",
             "required": true,
             "helpMarkDown": "Check to make the task kill all open instances of mmc and taskmgr in an attempt to avoid the dreaded: The specified service has been marked for deletion. See: http://stackoverflow.com/questions/20561990/how-to-solve-the-specified-service-has-been-marked-for-deletion-error"
         }
