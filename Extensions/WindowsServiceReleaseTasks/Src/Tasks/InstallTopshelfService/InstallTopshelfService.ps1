@@ -46,7 +46,7 @@ Try
 		$additionalSharedArguments += " -username:$serviceUsername"
 		if (-Not [string]::IsNullOrWhiteSpace($servicePassword))
 		{
-			$additionalSharedArguments += " -password:$servicePassword"
+			$additionalSharedArguments += " -password:""$servicePassword"""
 		}
 	}
 	else
