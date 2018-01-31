@@ -25,11 +25,20 @@
             "helpMarkDown": "The usernames to grant logon as a service with the domain appended."
         },
         {
+            "name": "deploymentGroup",
+            "type": "boolean",
+            "label": "Target is Deployment Group",
+            "required": true,
+            "defaultValue": "false",
+            "helpMarkDown": "Agents run directly on the server in deployment group. No WinRM Necessary."
+        },
+        {
             "name": "EnvironmentName",
             "type": "multiLine",
             "label": "Machines",
             "defaultValue": "",
-            "required": true,
+            "visibleRule": "deploymentGroup = false",
+            "required": false,
             "helpMarkDown": "Provide a comma separated list of machine IP addresses or FQDNs. <br>Eg: dbserver.fabrikam.com,192.168.12.34 <br>Or provide output variable of other tasks. Eg: $(variableName)"
         },
         {
@@ -37,7 +46,8 @@
             "type": "string",
             "label": "Admin Login",
             "defaultValue": "",
-            "required": true,
+            "visibleRule": "deploymentGroup = false",
+            "required": false,
             "helpMarkDown": "Administrator login for the target machines."
         },
         {
@@ -45,14 +55,16 @@
             "type": "string",
             "label": "Password",
             "defaultValue": "",
-            "required": true,
+            "visibleRule": "deploymentGroup = false",
+            "required": false,
             "helpMarkDown": "Password for administrator login for the target machines. <br>It can accept variable defined in Build/Release definitions as '$(passwordVariable)'. <br>You may mark variable type as 'secret' to secure it. "
         },
         {
             "name": "protocol",
             "type": "radio",
             "label": "Protocol",
-            "required": true,
+            "required": false,
+            "visibleRule": "deploymentGroup = false",
             "defaultValue": "Http",
             "options": {
                 "Http": "HTTP",
@@ -65,7 +77,7 @@
             "type": "boolean",
             "label": "Test Certificate",
             "defaultValue": "true",
-            "visibleRule": "protocol = Https",
+            "visibleRule": "protocol = Https && deploymentGroup = false",
             "required": false,
             "helpMarkDown": "Select the option to skip validating the authenticity of the machine's certificate from a trusted certification authority. The parameter is required for the WinRM HTTPS protocol."
         },
@@ -74,6 +86,7 @@
             "type": "boolean",
             "label": "Run PowerShell in Parallel",
             "defaultValue": "true",
+            "visibleRule": "deploymentGroup = false",
             "required": false,
             "helpMarkDown": "Setting it to true will run the PowerShell scripts in parallel on the target machines."
         }

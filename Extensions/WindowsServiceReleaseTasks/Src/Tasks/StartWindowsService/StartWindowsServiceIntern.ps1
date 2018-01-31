@@ -1,14 +1,11 @@
-function StartStopServices(
-    [string][Parameter(Mandatory = $true)][ValidateNotNullOrEmpty()] $serviceNames,
+function StartStopServicesArray(
+    [string[]][Parameter(Mandatory = $true)][ValidateNotNullOrEmpty()] $services,
     [string][Parameter(Mandatory = $true)][ValidateSet("Manual", "Automatic")] $startupType,
-    [int][Parameter(Mandatory = $true)] $waitTimeoutInSeconds,
-    [string][Parameter(Mandatory = $true)] $killIfTimedOut
+    [int][Parameter(Mandatory = $true)] $waitTimeoutInSeconds
 ) {
-    [string[]] $servicesNamesArray = ($serviceNames -split ',' -replace '"').Trim()
-
     [bool] $atLeastOneServiceWasNotFound = $false
     $presentServicesArray = $null
-    $servicesNamesArray | ForEach-Object {
+    $services | ForEach-Object {
         $serviceName = $_
         $matchingServices = [PSCustomObject[]] (Get-Service -Name $serviceName -ErrorAction SilentlyContinue)
 
@@ -30,4 +27,15 @@ function StartStopServices(
     $presentServicesArray | % { Set-Service -Name $_.Name -StartupType $startupType }
     $presentServicesArray | Where-Object { $_.Status -ne "Running" } | % { $_.Start() }
     $presentServicesArray | % { $_.WaitForStatus("Running", [TimeSpan]::FromSeconds($waitTimeoutInSeconds)) }
+}
+
+function StartStopServices(
+    [string][Parameter(Mandatory = $true)][ValidateNotNullOrEmpty()] $serviceNames,
+    [string][Parameter(Mandatory = $true)][ValidateSet("Manual", "Automatic")] $startupType,
+    [int][Parameter(Mandatory = $true)] $waitTimeoutInSeconds,
+    [string][Parameter(Mandatory = $true)] $killIfTimedOut
+) {
+    [string[]] $servicesNamesArray = ($serviceNames -split ',' -replace '"').Trim()
+
+    return StartStopServicesArray $servicesNamesArray $startupType $waitTimeoutInSeconds
 }

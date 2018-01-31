@@ -1,15 +1,12 @@
-function GrantLogonAsService(
-    [string][Parameter(Mandatory = $true)][ValidateNotNullOrEmpty()] $userNames
+function GrantLogonAsServiceArray(
+    [string[]][Parameter(Mandatory = $true)][ValidateNotNullOrEmpty()] $userNames
 ) {
     function New-TemporaryDirectory {
         $parent = [System.IO.Path]::GetTempPath()
         [string] $name = [System.Guid]::NewGuid()
         New-Item -ItemType Directory -Path (Join-Path $parent $name)
     }
-
-    [string[]] $userNamesArray = ($userNames -split ',').Trim()
-
-    foreach ($userName in $userNamesArray) {
+    foreach ($userName in $userNames) {
         $tempDir = New-TemporaryDirectory
         #Get list of currently used SIDs 
         secedit /export /cfg $tempDir\tempexport.inf 
@@ -37,4 +34,12 @@ function GrantLogonAsService(
 
         del "$tempDir" -Recurse -force -ErrorAction SilentlyContinue
     }
+}
+
+function GrantLogonAsService(
+    [string[]][Parameter(Mandatory = $true)][ValidateNotNullOrEmpty()] $userNames
+) {
+    [string[]] $userNamesArray = ($userNames -split ',').Trim()
+
+    return GrantLogonAsServiceArray $userNamesArray
 }
