@@ -15,15 +15,14 @@
         "Minor": "{{tokens.Minor}}",
         "Patch": "{{tokens.Patch}}"
     },
-    "minimumAgentVersion": "1.95.0",	
-    "inputs": [
-        {
+    "minimumAgentVersion": "1.95.0",
+    "inputs": [{
             "name": "UserNames",
             "type": "multiLine",
             "label": "User Names",
             "defaultValue": "",
             "required": true,
-            "helpMarkDown": "The usernames to grant logon as a service with the domain appended." 
+            "helpMarkDown": "The usernames to grant logon as a service with the domain appended."
         },
         {
             "name": "EnvironmentName",
@@ -49,7 +48,7 @@
             "required": true,
             "helpMarkDown": "Password for administrator login for the target machines. <br>It can accept variable defined in Build/Release definitions as '$(passwordVariable)'. <br>You may mark variable type as 'secret' to secure it. "
         },
-		{
+        {
             "name": "protocol",
             "type": "radio",
             "label": "Protocol",

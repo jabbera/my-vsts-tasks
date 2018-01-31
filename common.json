@@ -1,54 +1,50 @@
 {
-    "StartWindowsService": [
-        {
+    "StartWindowsService": [{
             "module": "Helper",
             "dest": ""
         },
-		{
+        {
             "module": "DeploymentSDK",
             "dest": "DeploymentSDK"
         },
-		{
-			"module": "VstsTaskSdk",
-			"dest": "ps_modules"
-		}
-    ],
-	"StopWindowsService": [
         {
+            "module": "VstsTaskSdk",
+            "dest": "ps_modules"
+        }
+    ],
+    "StopWindowsService": [{
             "module": "Helper",
             "dest": ""
         },
-		{
+        {
             "module": "DeploymentSDK",
             "dest": "DeploymentSDK"
         },
-		{
-			"module": "VstsTaskSdk",
-			"dest": "ps_modules"
-		}
-    ],
-	"GrantLogonAsAServiceRight": [
         {
+            "module": "VstsTaskSdk",
+            "dest": "ps_modules"
+        }
+    ],
+    "GrantLogonAsAServiceRight": [{
             "module": "Helper",
             "dest": ""
         },
-		{
+        {
             "module": "DeploymentSDK",
             "dest": "DeploymentSDK"
         },
-		{
-			"module": "VstsTaskSdk",
-			"dest": "ps_modules"
-		}
+        {
+            "module": "VstsTaskSdk",
+            "dest": "ps_modules"
+        }
     ],
-	"InstallTopshelfService": [
-		{
+    "InstallTopshelfService": [{
             "module": "DeploymentSDK",
             "dest": "DeploymentSDK"
         },
-		{
-			"module": "VstsTaskSdk",
-			"dest": "ps_modules"
-		}
-	]
+        {
+            "module": "VstsTaskSdk",
+            "dest": "ps_modules"
+        }
+    ]
 }

@@ -3,8 +3,7 @@ Param()
 
 Trace-VstsEnteringInvocation $MyInvocation
 
-Try
-{
+Try {
 
     [string]$topshelfExePaths = Get-VstsInput -Name topshelfExePaths -Require
     [string]$environmentName = Get-VstsInput -Name environmentName -Require
@@ -12,101 +11,88 @@ Try
     [string]$adminPassword = Get-VstsInput -Name adminPassword -Require
     [string]$protocol = Get-VstsInput -Name protocol -Require
     [string]$testCertificate = Get-VstsInput -Name testCertificate -Require
-	[string]$specialUser = Get-VstsInput -Name specialUser -Require
-	[string]$serviceUsername = Get-VstsInput -Name serviceUsername
+    [string]$specialUser = Get-VstsInput -Name specialUser -Require
+    [string]$serviceUsername = Get-VstsInput -Name serviceUsername
     [string]$servicePassword = Get-VstsInput -Name servicePassword
     [string]$instanceName = Get-VstsInput -Name instanceName
-	[string]$serviceName = Get-VstsInput -Name serviceName
-	[string]$displayName = Get-VstsInput -Name displayName
-	[string]$description = Get-VstsInput -Name description
-	[string]$startupType = Get-VstsInput -Name startupType -Default "default"
-	[string]$uninstallFirst = Get-VstsInput -Name uninstallFirst
-	[string]$killMmcTaskManager = Get-VstsInput -Name killMmcTaskManager
-	[bool]$runPowershellInParallel = Get-VstsInput -Name RunPowershellInParallel -Default $true -AsBool
+    [string]$serviceName = Get-VstsInput -Name serviceName
+    [string]$displayName = Get-VstsInput -Name displayName
+    [string]$description = Get-VstsInput -Name description
+    [string]$startupType = Get-VstsInput -Name startupType -Default "default"
+    [string]$uninstallFirst = Get-VstsInput -Name uninstallFirst
+    [string]$killMmcTaskManager = Get-VstsInput -Name killMmcTaskManager
+    [bool]$runPowershellInParallel = Get-VstsInput -Name RunPowershellInParallel -Default $true -AsBool
 
-	$env:CURRENT_TASK_ROOTDIR = Split-Path -Parent $MyInvocation.MyCommand.Path
+    $env:CURRENT_TASK_ROOTDIR = Split-Path -Parent $MyInvocation.MyCommand.Path
 
-	Import-Module $env:CURRENT_TASK_ROOTDIR\DeploymentSDK\InvokeRemoteDeployment.ps1
+    Import-Module $env:CURRENT_TASK_ROOTDIR\DeploymentSDK\InvokeRemoteDeployment.ps1
 
-	Write-Output "Installing TopShelf service: $topshelfExePaths with instanceName: $instanceName. Version: {{tokens.BuildNumber}}"
+    Write-Output "Installing TopShelf service: $topshelfExePaths with instanceName: $instanceName. Version: {{tokens.BuildNumber}}"
 
-	$env:CURRENT_TASK_ROOTDIR = Split-Path -Parent $MyInvocation.MyCommand.Path
+    $env:CURRENT_TASK_ROOTDIR = Split-Path -Parent $MyInvocation.MyCommand.Path
 
-	[string[]] $topshelfExePathsArray = ($topshelfExePaths -split ',').Trim()
+    [string[]] $topshelfExePathsArray = ($topshelfExePaths -split ',').Trim()
 
-	$servicePassword = $servicePassword.Replace('`', '``').Replace('"', '`"').Replace('$', '`$').Replace('&', '`&').Replace('''', '`''').Replace('(','`(').Replace(')','`)').Replace('@','`@').Replace('}','`}').Replace('{','`{')
+    $servicePassword = $servicePassword.Replace('`', '``').Replace('"', '`"').Replace('$', '`$').Replace('&', '`&').Replace('''', '`''').Replace('(', '`(').Replace(')', '`)').Replace('@', '`@').Replace('}', '`}').Replace('{', '`{')
 
-	Write-Host ("##vso[task.setvariable variable=E34A69771F47424D9217F3A4D6BCDC94;issecret=true;]$servicePassword") # Make sure the password doesn't show up in the log.
+    Write-Host ("##vso[task.setvariable variable=E34A69771F47424D9217F3A4D6BCDC94;issecret=true;]$servicePassword") # Make sure the password doesn't show up in the log.
 
-	$instanceName = $instanceName.Replace('`', '``').Replace('"', '`"').Replace('$', '`$').Replace('&', '`&')
+    $instanceName = $instanceName.Replace('`', '``').Replace('"', '`"').Replace('$', '`$').Replace('&', '`&')
 
-	$additionalSharedArguments = ""
-	if ($specialUser -eq "custom")
-	{
-		$additionalSharedArguments += " -username:$serviceUsername"
-		if (-Not [string]::IsNullOrWhiteSpace($servicePassword))
-		{
-			$additionalSharedArguments += " -password:$servicePassword"
-		}
-	}
-	else
-	{
-		$additionalSharedArguments += " --$specialUser"
-	}
+    $additionalSharedArguments = ""
+    if ($specialUser -eq "custom") {
+        $additionalSharedArguments += " -username:$serviceUsername"
+        if (-Not [string]::IsNullOrWhiteSpace($servicePassword)) {
+            $additionalSharedArguments += " -password:$servicePassword"
+        }
+    }
+    else {
+        $additionalSharedArguments += " --$specialUser"
+    }
 
-	if (-Not [string]::IsNullOrWhiteSpace($instanceName))
-	{
-		$additionalSharedArguments += " -instance:$instanceName"
-	}
-	if (-Not [string]::IsNullOrWhiteSpace($serviceName))
-	{
-		$additionalSharedArguments += " -servicename:$serviceName"
-	}
-	if (-Not [string]::IsNullOrWhiteSpace($displayName))
-	{
-		$additionalSharedArguments += " -displayname ""$displayName"""
-	}
-	if (-Not [string]::IsNullOrWhiteSpace($description))
-	{
-		$additionalSharedArguments += " -description ""$description"""
-	}
-	
-	$additonalInstallArguments = ""
-	if ($startupType -ne "default")
-	{
-		$additonalInstallArguments = "--$startupType"
-	}
-	
-	$cmd = "`$env:DT_DISABLEINITIALLOGGING='true'`n"
-	$cmd += "`$env:DT_LOGLEVELCON='NONE'`n"
+    if (-Not [string]::IsNullOrWhiteSpace($instanceName)) {
+        $additionalSharedArguments += " -instance:$instanceName"
+    }
+    if (-Not [string]::IsNullOrWhiteSpace($serviceName)) {
+        $additionalSharedArguments += " -servicename:$serviceName"
+    }
+    if (-Not [string]::IsNullOrWhiteSpace($displayName)) {
+        $additionalSharedArguments += " -displayname ""$displayName"""
+    }
+    if (-Not [string]::IsNullOrWhiteSpace($description)) {
+        $additionalSharedArguments += " -description ""$description"""
+    }
 
-	if ($killMmcTaskManager -eq "true")
-	{
-		$cmd += "Stop-Process -name mmc,taskmgr -Force -ErrorAction SilentlyContinue`n"
-	}
+    $additonalInstallArguments = ""
+    if ($startupType -ne "default") {
+        $additonalInstallArguments = "--$startupType"
+    }
 
-	foreach($topShelfExe in $topshelfExePathsArray)
-	{
-		if ($uninstallFirst -eq "true")
-		{
-			$cmd += "& ""$topShelfExe"" uninstall $additionalSharedArguments`n"
-		}
-		
-		$cmd += "& ""$topShelfExe"" install $additionalSharedArguments $additonalInstallArguments`n"
-	}
+    $cmd = "`$env:DT_DISABLEINITIALLOGGING='true'`n"
+    $cmd += "`$env:DT_LOGLEVELCON='NONE'`n"
 
-	Write-Output "CMD: $cmd"
+    if ($killMmcTaskManager -eq "true") {
+        $cmd += "Stop-Process -name mmc,taskmgr -Force -ErrorAction SilentlyContinue`n"
+    }
 
-	$errorMessage = Invoke-RemoteDeployment -machinesList $environmentName -scriptToRun $cmd -deployInParallel $runPowershellInParallel -adminUserName $adminUserName -adminPassword $adminPassword -protocol $protocol -testCertificate $testCertificate
+    foreach ($topShelfExe in $topshelfExePathsArray) {
+        if ($uninstallFirst -eq "true") {
+            $cmd += "& ""$topShelfExe"" uninstall $additionalSharedArguments`n"
+        }
 
-	if(-Not [string]::IsNullOrEmpty($errorMessage))
-	{
-		$helpMessage = "For more info please google."
-		Write-Error "$errorMessage`n$helpMessage"
-		return
-	}
+        $cmd += "& ""$topShelfExe"" install $additionalSharedArguments $additonalInstallArguments`n"
+    }
+
+    Write-Output "CMD: $cmd"
+
+    $errorMessage = Invoke-RemoteDeployment -machinesList $environmentName -scriptToRun $cmd -deployInParallel $runPowershellInParallel -adminUserName $adminUserName -adminPassword $adminPassword -protocol $protocol -testCertificate $testCertificate
+
+    if (-Not [string]::IsNullOrEmpty($errorMessage)) {
+        $helpMessage = "For more info please google."
+        Write-Error "$errorMessage`n$helpMessage"
+        return
+    }
 }
-finally
-{
-	Trace-VstsLeavingInvocation $MyInvocation
+finally {
+    Trace-VstsLeavingInvocation $MyInvocation
 }

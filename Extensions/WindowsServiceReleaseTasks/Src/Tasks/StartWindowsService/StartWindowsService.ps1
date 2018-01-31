@@ -3,29 +3,27 @@ Param()
 
 Trace-VstsEnteringInvocation $MyInvocation
 
-Try
-{
-	[string]$serviceNames = Get-VstsInput -Name serviceNames -Require
+Try {
+    [string]$serviceNames = Get-VstsInput -Name serviceNames -Require
     [string]$environmentName = Get-VstsInput -Name environmentName -Require
     [string]$adminUserName = Get-VstsInput -Name adminUserName -Require
     [string]$adminPassword = Get-VstsInput -Name adminPassword -Require
-	[string]$startupType = Get-VstsInput -Name startupType -Require
+    [string]$startupType = Get-VstsInput -Name startupType -Require
     [string]$protocol = Get-VstsInput -Name protocol -Require
     [string]$testCertificate = Get-VstsInput -Name testCertificate -Require
     [string]$waitTimeoutInSeconds = Get-VstsInput -Name waitTimeoutInSeconds -Require
-	[bool]$runPowershellInParallel = Get-VstsInput -Name RunPowershellInParallel -Default $true -AsBool
-	
-	Write-Output "Starting Windows Services $serviceNames and setting startup type to: $startupType. Version: {{tokens.BuildNumber}}"
+    [bool]$runPowershellInParallel = Get-VstsInput -Name RunPowershellInParallel -Default $true -AsBool
 
-	$env:CURRENT_TASK_ROOTDIR = Split-Path -Parent $MyInvocation.MyCommand.Path
+    Write-Output "Starting Windows Services $serviceNames and setting startup type to: $startupType. Version: {{tokens.BuildNumber}}"
 
-	. $env:CURRENT_TASK_ROOTDIR\Utility.ps1
+    $env:CURRENT_TASK_ROOTDIR = Split-Path -Parent $MyInvocation.MyCommand.Path
 
-	$serviceNames = '"' + $serviceNames.Replace('`', '``').Replace('"', '`"').Replace('$', '`$').Replace('&', '`&').Replace('''', '`''') + '"'
+    . $env:CURRENT_TASK_ROOTDIR\Utility.ps1
 
-	Remote-ServiceStartStop -serviceNames $serviceNames -machinesList $environmentName -adminUserName $adminUserName -adminPassword $adminPassword -startupType $startupType -protocol $protocol -testCertificate $testCertificate -waitTimeoutInSeconds $waitTimeoutInSeconds -internStringFileName "StartWindowsServiceIntern.ps1" -killIfTimedOut "false" -runPowershellInParallel $runPowershellInParallel
+    $serviceNames = '"' + $serviceNames.Replace('`', '``').Replace('"', '`"').Replace('$', '`$').Replace('&', '`&').Replace('''', '`''') + '"'
+
+    Remote-ServiceStartStop -serviceNames $serviceNames -machinesList $environmentName -adminUserName $adminUserName -adminPassword $adminPassword -startupType $startupType -protocol $protocol -testCertificate $testCertificate -waitTimeoutInSeconds $waitTimeoutInSeconds -internStringFileName "StartWindowsServiceIntern.ps1" -killIfTimedOut "false" -runPowershellInParallel $runPowershellInParallel
 }
-finally
-{
-	Trace-VstsLeavingInvocation $MyInvocation
+finally {
+    Trace-VstsLeavingInvocation $MyInvocation
 }

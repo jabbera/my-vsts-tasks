@@ -3,29 +3,27 @@ Param()
 
 Trace-VstsEnteringInvocation $MyInvocation
 
-Try
-{
+Try {
     [string]$userNames = Get-VstsInput -Name userNames -Require
     [string]$environmentName = Get-VstsInput -Name environmentName -Require
     [string]$adminUserName = Get-VstsInput -Name adminUserName -Require
     [string]$adminPassword = Get-VstsInput -Name adminPassword -Require
     [string]$protocol = Get-VstsInput -Name protocol -Require
     [string]$testCertificate = Get-VstsInput -Name testCertificate -Require
-	[bool]$runPowershellInParallel = Get-VstsInput -Name RunPowershellInParallel -Default $true -AsBool
-	
-	Write-Output "Granting LogonAsAService to $userNames. Version: {{tokens.BuildNumber}}"
+    [bool]$runPowershellInParallel = Get-VstsInput -Name RunPowershellInParallel -Default $true -AsBool
 
-	$env:CURRENT_TASK_ROOTDIR = Split-Path -Parent $MyInvocation.MyCommand.Path
+    Write-Output "Granting LogonAsAService to $userNames. Version: {{tokens.BuildNumber}}"
 
-	. $env:CURRENT_TASK_ROOTDIR\Utility.ps1
+    $env:CURRENT_TASK_ROOTDIR = Split-Path -Parent $MyInvocation.MyCommand.Path
 
-	$userNames = $userNames -replace '\s','' # no spaces allows in argument lists
+    . $env:CURRENT_TASK_ROOTDIR\Utility.ps1
 
-	$scriptArguments = "-userNames $userNames"
+    $userNames = $userNames -replace '\s', '' # no spaces allows in argument lists
 
-	Remote-RunScript -machinesList $environmentName -adminUserName $adminUserName -adminPassword $adminPassword -protocol $protocol -testCertificate $testCertificate -internStringFileName "GrantLogonAsAServiceRightIntern.ps1" -scriptEntryPoint "GrantLogonAsService" -scriptArguments $scriptArguments -runPowershellInParallel $runPowershellInParallel
+    $scriptArguments = "-userNames $userNames"
+
+    Remote-RunScript -machinesList $environmentName -adminUserName $adminUserName -adminPassword $adminPassword -protocol $protocol -testCertificate $testCertificate -internStringFileName "GrantLogonAsAServiceRightIntern.ps1" -scriptEntryPoint "GrantLogonAsService" -scriptArguments $scriptArguments -runPowershellInParallel $runPowershellInParallel
 }
-finally
-{
-	Trace-VstsLeavingInvocation $MyInvocation
+finally {
+    Trace-VstsLeavingInvocation $MyInvocation
 }
