@@ -5,6 +5,7 @@ Trace-VstsEnteringInvocation $MyInvocation
 
 Try {
     [string]$serviceNames = Get-VstsInput -Name serviceNames -Require
+    [string]$instanceName = Get-VstsInput -Name instanceName
     [string]$startupType = Get-VstsInput -Name startupType -Require
     [string]$waitTimeoutInSeconds = Get-VstsInput -Name waitTimeoutInSeconds -Require
     [string]$killIfTimedOut = Get-VstsInput -Name killIfTimedOut -Require
@@ -35,7 +36,7 @@ Try {
 
         . $env:CURRENT_TASK_ROOTDIR\Utility.ps1
 
-        Remote-ServiceStartStop -serviceNames $serviceNames -machinesList $environmentName -adminUserName $adminUserName -adminPassword $adminPassword -startupType $startupType -protocol $protocol -testCertificate $testCertificate -waitTimeoutInSeconds $waitTimeoutInSeconds -internStringFileName "StopWindowsServiceIntern.ps1" -killIfTimedOut $killIfTimedOut	 -runPowershellInParallel $runPowershellInParallel
+        Remote-ServiceStartStop -serviceNames $serviceNames -instanceName $instanceName -machinesList $environmentName -adminUserName $adminUserName -adminPassword $adminPassword -startupType $startupType -protocol $protocol -testCertificate $testCertificate -waitTimeoutInSeconds $waitTimeoutInSeconds -internStringFileName "StopWindowsServiceIntern.ps1" -killIfTimedOut $killIfTimedOut	 -runPowershellInParallel $runPowershellInParallel
     }
 }
 finally {

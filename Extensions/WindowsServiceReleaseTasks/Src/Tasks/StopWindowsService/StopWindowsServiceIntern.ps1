@@ -1,5 +1,6 @@
 function StartStopServicesArray(
     [string[]][Parameter(Mandatory = $true)][ValidateNotNullOrEmpty()] $services,
+    [string][Parameter(Mandatory=$true)][AllowEmptyString()] $instanceName,
     [string][Parameter(Mandatory = $true)][ValidateSet("Disabled", "Manual", "Automatic")] $startupType,
     [int][Parameter(Mandatory = $true)] $waitTimeoutInSeconds,
     [string][Parameter(Mandatory = $true)] $killIfTimedOut
@@ -7,6 +8,11 @@ function StartStopServicesArray(
     $presentServicesArray = $null
     $services | ForEach-Object {
         $serviceName = $_
+
+        if (-not [System.string]::IsNullOrWhiteSpace($instanceName)) {
+            $serviceName += "$" + $instanceName
+        }
+
         $matchingServices = [PSCustomObject[]] (Get-Service -Name $serviceName -ErrorAction SilentlyContinue)
 
         if ($matchingServices -eq $null)
@@ -54,6 +60,7 @@ function StartStopServicesArray(
 
 function StartStopServices(
     [string][Parameter(Mandatory = $true)][ValidateNotNullOrEmpty()] $serviceNames,
+    [string][Parameter(Mandatory=$true)] $instanceName,
     [string][Parameter(Mandatory = $true)][ValidateSet("Disabled", "Manual", "Automatic")] $startupType,
     [int][Parameter(Mandatory = $true)] $waitTimeoutInSeconds,
     [string][Parameter(Mandatory = $true)] $killIfTimedOut

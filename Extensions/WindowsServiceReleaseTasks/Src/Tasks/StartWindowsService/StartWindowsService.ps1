@@ -5,6 +5,7 @@ Trace-VstsEnteringInvocation $MyInvocation
 
 Try {
     [string]$serviceNames = Get-VstsInput -Name serviceNames -Require
+    [string]$instanceName = Get-VstsInput -Name instanceName
     [string]$waitTimeoutInSeconds = Get-VstsInput -Name waitTimeoutInSeconds -Require
     [string]$startupType = Get-VstsInput -Name startupType -Require
     [bool]$targetIsDeploymentGroup = Get-VstsInput -Name deploymentGroup -Require -AsBool
@@ -33,7 +34,7 @@ Try {
         [string]$testCertificate = Get-VstsInput -Name testCertificate -Require
         [bool]$runPowershellInParallel = Get-VstsInput -Name RunPowershellInParallel -Default $true -AsBool
 
-        Remote-ServiceStartStop -serviceNames $serviceNames -machinesList $environmentName -adminUserName $adminUserName -adminPassword $adminPassword -startupType $startupType -protocol $protocol -testCertificate $testCertificate -waitTimeoutInSeconds $waitTimeoutInSeconds -internStringFileName "StartWindowsServiceIntern.ps1" -killIfTimedOut "false" -runPowershellInParallel $runPowershellInParallel
+        Remote-ServiceStartStop -serviceNames $serviceNames -machinesList -instanceName $instanceName $environmentName -adminUserName $adminUserName -adminPassword $adminPassword -startupType $startupType -protocol $protocol -testCertificate $testCertificate -waitTimeoutInSeconds $waitTimeoutInSeconds -internStringFileName "StartWindowsServiceIntern.ps1" -killIfTimedOut "false" -runPowershellInParallel $runPowershellInParallel
     }
 }
 finally {

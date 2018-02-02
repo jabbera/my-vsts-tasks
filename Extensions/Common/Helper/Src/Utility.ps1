@@ -29,6 +29,7 @@ function Remote-ServiceStartStop()
     Param
     (
         [string][Parameter(Mandatory=$true)][ValidateNotNullOrEmpty()] $serviceNames,
+        [string][Parameter(Mandatory=$true)] $instanceName,
         [string][Parameter(Mandatory=$true)][ValidateNotNullOrEmpty()] $machinesList,
         [string][Parameter(Mandatory=$true)][ValidateNotNullOrEmpty()] $adminUserName,
         [string][Parameter(Mandatory=$true)][ValidateNotNullOrEmpty()] $adminPassword,

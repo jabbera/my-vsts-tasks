@@ -25,6 +25,14 @@
             "helpMarkDown": "The name of the windows service to start. Comma separate to stop multiple. Supports wildcards (*)."
         },
         {
+            "name": "InstanceName",
+            "type": "string",
+            "label": "TopShelf Instance Name",
+            "defaultValue": "",
+            "required": false,
+            "helpMarkDown": "If you use topshelf, the instance name. This name will be appended to the end of each service in ServiceNames"
+        },
+        {
             "name": "StartupType",
             "type": "radio",
             "label": "Service Startup Type",
