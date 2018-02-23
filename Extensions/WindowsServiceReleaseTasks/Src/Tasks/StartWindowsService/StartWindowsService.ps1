@@ -34,7 +34,7 @@ Try {
         [string]$testCertificate = Get-VstsInput -Name testCertificate -Require
         [bool]$runPowershellInParallel = Get-VstsInput -Name RunPowershellInParallel -Default $true -AsBool
 
-        Remote-ServiceStartStop -serviceNames $serviceNames -machinesList -instanceName $instanceName $environmentName -adminUserName $adminUserName -adminPassword $adminPassword -startupType $startupType -protocol $protocol -testCertificate $testCertificate -waitTimeoutInSeconds $waitTimeoutInSeconds -internStringFileName "StartWindowsServiceIntern.ps1" -killIfTimedOut "false" -runPowershellInParallel $runPowershellInParallel
+        Remote-ServiceStartStop -serviceNames $serviceNames -machinesList $environmentName -instanceName $instanceName -adminUserName $adminUserName -adminPassword $adminPassword -startupType $startupType -protocol $protocol -testCertificate $testCertificate -waitTimeoutInSeconds $waitTimeoutInSeconds -internStringFileName "StartWindowsServiceIntern.ps1" -killIfTimedOut "false" -runPowershellInParallel $runPowershellInParallel
     }
 }
 finally {
