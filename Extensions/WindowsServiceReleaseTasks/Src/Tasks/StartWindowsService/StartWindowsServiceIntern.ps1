@@ -36,12 +36,12 @@ function StartStopServicesArray(
 
 function StartStopServices(
     [string][Parameter(Mandatory = $true)][ValidateNotNullOrEmpty()] $serviceNames,
-    [string][Parameter(Mandatory=$true)] $instanceName,
+    [string][Parameter(Mandatory=$true)][AllowEmptyString()] $instanceName,
     [string][Parameter(Mandatory = $true)][ValidateSet("Manual", "Automatic")] $startupType,
     [int][Parameter(Mandatory = $true)] $waitTimeoutInSeconds,
     [string][Parameter(Mandatory = $true)] $killIfTimedOut
 ) {
     [string[]] $servicesNamesArray = ($serviceNames -split ',' -replace '"').Trim()
 
-    return StartStopServicesArray $servicesNamesArray $startupType $waitTimeoutInSeconds
+    return StartStopServicesArray $servicesNamesArray $instanceName $startupType $waitTimeoutInSeconds
 }

@@ -29,7 +29,7 @@ function Remote-ServiceStartStop()
     Param
     (
         [string][Parameter(Mandatory=$true)][ValidateNotNullOrEmpty()] $serviceNames,
-        [string][Parameter(Mandatory=$true)] $instanceName,
+        [string][Parameter(Mandatory=$true)][AllowEmptyString()] $instanceName,
         [string][Parameter(Mandatory=$true)][ValidateNotNullOrEmpty()] $machinesList,
         [string][Parameter(Mandatory=$true)][ValidateNotNullOrEmpty()] $adminUserName,
         [string][Parameter(Mandatory=$true)][ValidateNotNullOrEmpty()] $adminPassword,
@@ -44,7 +44,7 @@ function Remote-ServiceStartStop()
 
     Validate-WaitTime $waitTimeoutInSeconds
 	
-    $scriptArguments = "-serviceNames $serviceNames -startupType $startupType -waitTimeoutInSeconds $waitTimeoutInSeconds -killIfTimedOut $killIfTimedOut"
+    $scriptArguments = "-serviceNames $serviceNames -instanceName `"$instanceName`" -startupType $startupType -waitTimeoutInSeconds $waitTimeoutInSeconds -killIfTimedOut $killIfTimedOut"
 	
 	Write-Host "ScriptArguments: $scriptArguments"
 	
