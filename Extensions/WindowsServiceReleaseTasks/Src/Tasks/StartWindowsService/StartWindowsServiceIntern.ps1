@@ -41,7 +41,7 @@ function StartStopServices(
     [int][Parameter(Mandatory = $true)] $waitTimeoutInSeconds,
     [string][Parameter(Mandatory = $true)] $killIfTimedOut
 ) {
-    [string[]] $servicesNamesArray = ($serviceNames -split ',' -replace '"').Trim()
+    [string[]] $serviceNamesArray = [string[]]($serviceNames.Split(@(",", "`r", "`n"), [System.StringSplitOptions]::RemoveEmptyEntries).Trim())
 
-    return StartStopServicesArray $servicesNamesArray $instanceName $startupType $waitTimeoutInSeconds
+    return StartStopServicesArray $serviceNamesArray $instanceName $startupType $waitTimeoutInSeconds
 }
