@@ -10,6 +10,10 @@
         {
             "module": "VstsTaskSdk",
             "dest": "ps_modules"
+        },
+        {
+            "module": "TelemetryHelper",
+            "dest": "TelemetryHelper"
         }
     ],
     "StopWindowsService": [{
@@ -23,6 +27,10 @@
         {
             "module": "VstsTaskSdk",
             "dest": "ps_modules"
+        },
+        {
+            "module": "TelemetryHelper",
+            "dest": "TelemetryHelper"
         }
     ],
     "GrantLogonAsAServiceRight": [{
@@ -36,6 +44,10 @@
         {
             "module": "VstsTaskSdk",
             "dest": "ps_modules"
+        },
+        {
+            "module": "TelemetryHelper",
+            "dest": "TelemetryHelper"
         }
     ],
     "InstallTopshelfService": [{
@@ -45,6 +57,10 @@
         {
             "module": "VstsTaskSdk",
             "dest": "ps_modules"
+        },
+        {
+            "module": "TelemetryHelper",
+            "dest": "TelemetryHelper"
         }
     ]
 }
