@@ -17,6 +17,7 @@ Try {
 
     if ($targetIsDeploymentGroup) 
     {
+        . $env:CURRENT_TASK_ROOTDIR\TelemetryHelper\TelemetryHelper.ps1
         . $env:CURRENT_TASK_ROOTDIR\StopWindowsServiceIntern.ps1
 
         $serviceNamesArray = [string[]]($serviceNames.Split(@(",", "`r", "`n"), [System.StringSplitOptions]::RemoveEmptyEntries).Trim())

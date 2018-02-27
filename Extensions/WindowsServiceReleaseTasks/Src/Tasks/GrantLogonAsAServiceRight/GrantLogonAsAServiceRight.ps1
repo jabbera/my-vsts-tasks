@@ -21,6 +21,7 @@ Try {
     }
     else
     {
+        . $env:CURRENT_TASK_ROOTDIR\TelemetryHelper\TelemetryHelper.ps1
         . $env:CURRENT_TASK_ROOTDIR\Utility.ps1
 
         [string]$environmentName = Get-VstsInput -Name environmentName -Require
