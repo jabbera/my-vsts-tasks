@@ -17,7 +17,7 @@ Try {
     {
         . $env:CURRENT_TASK_ROOTDIR\GrantLogonAsAServiceRightIntern.ps1
 
-        $userNamesArray = [string[]]($userNames.Split(@(',', '\r', '\n').Trim(), [System.StringSplitOptions]::RemoveEmptyEntries))
+        $userNamesArray = [string[]]($userNames.Split(@(",", "`r", "`n"), [System.StringSplitOptions]::RemoveEmptyEntries).Trim())
 
         GrantLogonAsServiceArray $userNamesArray;
     }

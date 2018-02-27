@@ -39,7 +39,7 @@ function GrantLogonAsServiceArray(
 function GrantLogonAsService(
     [string[]][Parameter(Mandatory = $true)][ValidateNotNullOrEmpty()] $userNames
 ) {
-    [string[]] $userNamesArray = ($userNames -split ',').Trim()
+    [string[]] $userNamesArray = [string[]]($userNames.Split(@(",", "`r", "`n"), [System.StringSplitOptions]::RemoveEmptyEntries).Trim())
 
     return GrantLogonAsServiceArray $userNamesArray
 }
