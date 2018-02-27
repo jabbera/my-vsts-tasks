@@ -9,8 +9,6 @@ Try {
 
     $env:CURRENT_TASK_ROOTDIR = Split-Path -Parent $MyInvocation.MyCommand.Path
 
-    $userNames = $userNames -replace '\s', '' # no spaces allows in argument lists
-
     $scriptArguments = "-userNames $userNames"
 
     if ($targetIsDeploymentGroup)
