@@ -1,10 +1,10 @@
 {
-  "tokens":{
-    "BuildNumber": "{{tokens.Major}}.{{tokens.Minor}}.{{tokens.Patch}}",
-	"Major": {{tokens.Major}},
-	"Minor": {{tokens.Minor}},
-	"Patch": {{tokens.Patch}}
-  },
-  "prefix" : "{{",
-  "suffix" : "}}"
+    "tokens":{
+        "BuildNumber": "{{tokens.Major}}.{{tokens.Minor}}.{{tokens.Patch}}",
+        "Major": {{tokens.Major}},
+        "Minor": {{tokens.Minor}},
+        "Patch": {{tokens.Patch}}
+    },
+    "prefix" : "{{",
+    "suffix" : "}}"
 }

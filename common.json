@@ -1,54 +1,66 @@
 {
-    "StartWindowsService": [
-        {
+    "StartWindowsService": [{
             "module": "Helper",
             "dest": ""
         },
-		{
+        {
             "module": "DeploymentSDK",
             "dest": "DeploymentSDK"
         },
-		{
-			"module": "VstsTaskSdk",
-			"dest": "ps_modules"
-		}
-    ],
-	"StopWindowsService": [
         {
+            "module": "VstsTaskSdk",
+            "dest": "ps_modules"
+        },
+        {
+            "module": "TelemetryHelper",
+            "dest": "TelemetryHelper"
+        }
+    ],
+    "StopWindowsService": [{
             "module": "Helper",
             "dest": ""
         },
-		{
+        {
             "module": "DeploymentSDK",
             "dest": "DeploymentSDK"
         },
-		{
-			"module": "VstsTaskSdk",
-			"dest": "ps_modules"
-		}
-    ],
-	"GrantLogonAsAServiceRight": [
         {
+            "module": "VstsTaskSdk",
+            "dest": "ps_modules"
+        },
+        {
+            "module": "TelemetryHelper",
+            "dest": "TelemetryHelper"
+        }
+    ],
+    "GrantLogonAsAServiceRight": [{
             "module": "Helper",
             "dest": ""
         },
-		{
+        {
             "module": "DeploymentSDK",
             "dest": "DeploymentSDK"
         },
-		{
-			"module": "VstsTaskSdk",
-			"dest": "ps_modules"
-		}
+        {
+            "module": "VstsTaskSdk",
+            "dest": "ps_modules"
+        },
+        {
+            "module": "TelemetryHelper",
+            "dest": "TelemetryHelper"
+        }
     ],
-	"InstallTopshelfService": [
-		{
+    "InstallTopshelfService": [{
             "module": "DeploymentSDK",
             "dest": "DeploymentSDK"
         },
-		{
-			"module": "VstsTaskSdk",
-			"dest": "ps_modules"
-		}
-	]
+        {
+            "module": "VstsTaskSdk",
+            "dest": "ps_modules"
+        },
+        {
+            "module": "TelemetryHelper",
+            "dest": "TelemetryHelper"
+        }
+    ]
 }

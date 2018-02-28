@@ -1,5 +1,9 @@
 # Windows service release management tasks
-This extension contains tasks to start and stop windows services as well as change the startup type. This uses powershell remoting.
+
+### Now Supporting deployment groups
+No more usernames and passwords for deployment accounts!
+
+This extension contains tasks to start and stop windows services as well as change the startup type.
 
 1. **Start Windows Service(s)**
 
@@ -17,17 +21,11 @@ This extension contains tasks to start and stop windows services as well as chan
 
 	Topshelf handles this for you, but if you are winging it, you'll need this.
 	
-Note: This release migrates to the VSTS sdk and includes some major enhancements\fixes.
 
-Primary Changes include:
+Version 7 changes:
 
- * Ability to kill all open mmc\taskmgr to attempt to avoid the: Service is pending deletion issue
- * Proper escaping of passwords
- * Support spaces and $ in service names
- * Embed the DeploymentSdk and use that
- * Support parallel running of tasks
- * Chnage to the powershell 3 VSTS-SDK
- 
+ * Support deployment groups nativly. No more managing remote credentials in your releases!
+ * Support instance names in start\stop tasks
 
 Icons made by [Google](http://www.flaticon.com/authors/google) [www.flaticon.com](http://www.flaticon.com) [CC 3.0 BY](http://creativecommons.org/licenses/by/3.0/)
 Icons made by [Freepik](http://www.freepik.com) [www.flaticon.com](http://www.flaticon.com) [CC 3.0 BY](http://creativecommons.org/licenses/by/3.0/)

@@ -3,29 +3,38 @@ Param()
 
 Trace-VstsEnteringInvocation $MyInvocation
 
-Try
-{
+Try {
     [string]$userNames = Get-VstsInput -Name userNames -Require
-    [string]$environmentName = Get-VstsInput -Name environmentName -Require
-    [string]$adminUserName = Get-VstsInput -Name adminUserName -Require
-    [string]$adminPassword = Get-VstsInput -Name adminPassword -Require
-    [string]$protocol = Get-VstsInput -Name protocol -Require
-    [string]$testCertificate = Get-VstsInput -Name testCertificate -Require
-	[bool]$runPowershellInParallel = Get-VstsInput -Name RunPowershellInParallel -Default $true -AsBool
-	
-	Write-Output "Granting LogonAsAService to $userNames. Version: {{tokens.BuildNumber}}"
+    [bool]$targetIsDeploymentGroup = Get-VstsInput -Name deploymentGroup -Require -AsBool
 
-	$env:CURRENT_TASK_ROOTDIR = Split-Path -Parent $MyInvocation.MyCommand.Path
+    $env:CURRENT_TASK_ROOTDIR = Split-Path -Parent $MyInvocation.MyCommand.Path
 
-	. $env:CURRENT_TASK_ROOTDIR\Utility.ps1
+    if ($targetIsDeploymentGroup)
+    {
+        . $env:CURRENT_TASK_ROOTDIR\GrantLogonAsAServiceRightIntern.ps1
 
-	$userNames = $userNames -replace '\s','' # no spaces allows in argument lists
+        $userNamesArray = [string[]]($userNames.Split(@(",", "`r", "`n"), [System.StringSplitOptions]::RemoveEmptyEntries).Trim())
 
-	$scriptArguments = "-userNames $userNames"
+        GrantLogonAsServiceArray $userNamesArray;
+    }
+    else
+    {
+        . $env:CURRENT_TASK_ROOTDIR\TelemetryHelper\TelemetryHelper.ps1
+        . $env:CURRENT_TASK_ROOTDIR\Utility.ps1
 
-	Remote-RunScript -machinesList $environmentName -adminUserName $adminUserName -adminPassword $adminPassword -protocol $protocol -testCertificate $testCertificate -internStringFileName "GrantLogonAsAServiceRightIntern.ps1" -scriptEntryPoint "GrantLogonAsService" -scriptArguments $scriptArguments -runPowershellInParallel $runPowershellInParallel
+        $scriptArguments = "-userNames " + '"' + $userNames + '"'
+
+        [string]$environmentName = Get-VstsInput -Name environmentName -Require
+        [string]$adminUserName = Get-VstsInput -Name adminUserName -Require
+        [string]$adminPassword = Get-VstsInput -Name adminPassword -Require
+        [string]$protocol = Get-VstsInput -Name protocol -Require
+        [string]$testCertificate = Get-VstsInput -Name testCertificate -Require
+        [bool]$runPowershellInParallel = Get-VstsInput -Name RunPowershellInParallel -Default $true -AsBool
+    
+        Remote-RunScript -machinesList $environmentName -adminUserName $adminUserName -adminPassword $adminPassword -protocol $protocol -testCertificate $testCertificate -internStringFileName "GrantLogonAsAServiceRightIntern.ps1" -scriptEntryPoint "GrantLogonAsService" -scriptArguments $scriptArguments -runPowershellInParallel $runPowershellInParallel
+    }
+    
 }
-finally
-{
-	Trace-VstsLeavingInvocation $MyInvocation
+finally {
+    Trace-VstsLeavingInvocation $MyInvocation
 }
