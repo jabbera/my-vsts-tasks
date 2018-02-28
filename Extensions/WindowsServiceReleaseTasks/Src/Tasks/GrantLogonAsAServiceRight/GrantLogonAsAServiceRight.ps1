@@ -9,8 +9,6 @@ Try {
 
     $env:CURRENT_TASK_ROOTDIR = Split-Path -Parent $MyInvocation.MyCommand.Path
 
-    $scriptArguments = "-userNames $userNames"
-
     if ($targetIsDeploymentGroup)
     {
         . $env:CURRENT_TASK_ROOTDIR\GrantLogonAsAServiceRightIntern.ps1
@@ -23,6 +21,8 @@ Try {
     {
         . $env:CURRENT_TASK_ROOTDIR\TelemetryHelper\TelemetryHelper.ps1
         . $env:CURRENT_TASK_ROOTDIR\Utility.ps1
+
+        $scriptArguments = "-userNames " + '"' + $userNames + '"'
 
         [string]$environmentName = Get-VstsInput -Name environmentName -Require
         [string]$adminUserName = Get-VstsInput -Name adminUserName -Require
