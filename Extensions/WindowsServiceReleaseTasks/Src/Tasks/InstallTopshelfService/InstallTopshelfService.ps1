@@ -82,7 +82,7 @@ Try {
         Invoke-Expression $cmd
     }
     else
-    
+    {
         . $env:CURRENT_TASK_ROOTDIR\TelemetryHelper\TelemetryHelper.ps1
         Import-Module $env:CURRENT_TASK_ROOTDIR\DeploymentSDK\InvokeRemoteDeployment.ps1
 
