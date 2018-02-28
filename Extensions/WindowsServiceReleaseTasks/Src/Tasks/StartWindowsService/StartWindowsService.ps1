@@ -16,7 +16,6 @@ Try {
 
     if ($targetIsDeploymentGroup)
     {
-        . $env:CURRENT_TASK_ROOTDIR\TelemetryHelper\TelemetryHelper.ps1
         . $env:CURRENT_TASK_ROOTDIR\StartWindowsServiceIntern.ps1
 
         $serviceNamesArray = [string[]]($serviceNames.Split(@(",", "`r", "`n"), [System.StringSplitOptions]::RemoveEmptyEntries).Trim())
@@ -26,6 +25,8 @@ Try {
     else
     {
         $serviceNames = '"' + $serviceNames.Replace('`', '``').Replace('"', '`"').Replace('$', '`$').Replace('&', '`&').Replace('''', '`''') + '"'
+        
+        . $env:CURRENT_TASK_ROOTDIR\TelemetryHelper\TelemetryHelper.ps1
         . $env:CURRENT_TASK_ROOTDIR\Utility.ps1
 
         [string]$environmentName = Get-VstsInput -Name environmentName -Require

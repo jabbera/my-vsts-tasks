@@ -17,7 +17,6 @@ Try {
 
     if ($targetIsDeploymentGroup) 
     {
-        . $env:CURRENT_TASK_ROOTDIR\TelemetryHelper\TelemetryHelper.ps1
         . $env:CURRENT_TASK_ROOTDIR\StopWindowsServiceIntern.ps1
 
         $serviceNamesArray = [string[]]($serviceNames.Split(@(",", "`r", "`n"), [System.StringSplitOptions]::RemoveEmptyEntries).Trim())
@@ -35,6 +34,7 @@ Try {
         [string]$testCertificate = Get-VstsInput -Name testCertificate -Require
         [bool]$runPowershellInParallel = Get-VstsInput -Name RunPowershellInParallel -Default $true -AsBool
 
+        . $env:CURRENT_TASK_ROOTDIR\TelemetryHelper\TelemetryHelper.ps1
         . $env:CURRENT_TASK_ROOTDIR\Utility.ps1
 
         Remote-ServiceStartStop -serviceNames $serviceNames -instanceName $instanceName -machinesList $environmentName -adminUserName $adminUserName -adminPassword $adminPassword -startupType $startupType -protocol $protocol -testCertificate $testCertificate -waitTimeoutInSeconds $waitTimeoutInSeconds -internStringFileName "StopWindowsServiceIntern.ps1" -killIfTimedOut $killIfTimedOut	 -runPowershellInParallel $runPowershellInParallel

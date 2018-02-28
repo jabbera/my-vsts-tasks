@@ -16,8 +16,6 @@ Try {
     [string]$killMmcTaskManager = Get-VstsInput -Name killMmcTaskManager
     [bool]$targetIsDeploymentGroup = Get-VstsInput -Name deploymentGroup -Require -AsBool
 
-    $env:CURRENT_TASK_ROOTDIR = Split-Path -Parent $MyInvocation.MyCommand.Path
-
     Write-Output "Installing TopShelf service: $topshelfExePaths with instanceName: $instanceName. Version: {{tokens.BuildNumber}}"
 
     $env:CURRENT_TASK_ROOTDIR = Split-Path -Parent $MyInvocation.MyCommand.Path
@@ -84,8 +82,10 @@ Try {
         Invoke-Expression $cmd
     }
     else
-    {
+    
+        . $env:CURRENT_TASK_ROOTDIR\TelemetryHelper\TelemetryHelper.ps1
         Import-Module $env:CURRENT_TASK_ROOTDIR\DeploymentSDK\InvokeRemoteDeployment.ps1
+
         [string]$environmentName = Get-VstsInput -Name environmentName -Require
         [string]$adminUserName = Get-VstsInput -Name adminUserName -Require
         [string]$adminPassword = Get-VstsInput -Name adminPassword -Require
