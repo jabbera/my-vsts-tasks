@@ -10,7 +10,7 @@ Try {
     [string]$startupType = Get-VstsInput -Name startupType -Require
     [bool]$targetIsDeploymentGroup = Get-VstsInput -Name deploymentGroup -Require -AsBool
 
-    Write-Output "Starting Windows Services $serviceNames and setting startup type to: $startupType. Version: {{tokens.BuildNumber}}"
+    Write-Output "Starting Windows Services $serviceNames and setting startup type to: $startupType."
 
     $env:CURRENT_TASK_ROOTDIR = Split-Path -Parent $MyInvocation.MyCommand.Path
 

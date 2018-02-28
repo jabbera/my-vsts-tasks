@@ -3,7 +3,7 @@
     "name": "StartWindowsService",
     "friendlyName": "Start Windows Service",
     "description": "Start a windows service.",
-    "helpMarkDown": "Version: {{tokens.BuildNumber}} [More Information](https://github.com/jabbera/my-vsts-tasks)",
+    "helpMarkDown": "[More Information](https://github.com/jabbera/my-vsts-tasks)",
     "category": "Utility",
     "visibility": [
         "Build",

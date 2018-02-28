@@ -2,7 +2,7 @@
     "manifestVersion": 1,
     "id": "windows-service-release-tasks",
     "name": "Windows Service Release Tasks",
-    "version": "{{tokens.BuildNumber}}",
+    "version": "0.0.0",
     "publisher": "jabbera",
     "public": "true",
     "targets": [{

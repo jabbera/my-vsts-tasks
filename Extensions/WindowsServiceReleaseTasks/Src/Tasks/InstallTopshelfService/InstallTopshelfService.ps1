@@ -16,7 +16,7 @@ Try {
     [string]$killMmcTaskManager = Get-VstsInput -Name killMmcTaskManager
     [bool]$targetIsDeploymentGroup = Get-VstsInput -Name deploymentGroup -Require -AsBool
 
-    Write-Output "Installing TopShelf service: $topshelfExePaths with instanceName: $instanceName. Version: {{tokens.BuildNumber}}"
+    Write-Output "Installing TopShelf service: $topshelfExePaths with instanceName: $instanceName."
 
     $env:CURRENT_TASK_ROOTDIR = Split-Path -Parent $MyInvocation.MyCommand.Path
 
