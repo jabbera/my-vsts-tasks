@@ -12,7 +12,7 @@
     "categories": [
         "Build and release"
     ],
-    "tags": ["service", "release", "windows service"],
+    "tags": ["service", "release", "windows service", "deployment", "group"],
     "content": {
         "license": {
             "path": "license.txt"
