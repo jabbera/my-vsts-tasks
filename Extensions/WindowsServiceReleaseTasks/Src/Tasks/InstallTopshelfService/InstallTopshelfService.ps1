@@ -32,7 +32,9 @@ Try {
         [string]$servicePassword = Get-VstsInput -Name servicePassword
         
         $servicePassword = $servicePassword.Replace('`', '``').Replace('"', '`"').Replace('$', '`$').Replace('&', '`&').Replace('''', '`''').Replace('(', '`(').Replace(')', '`)').Replace('@', '`@').Replace('}', '`}').Replace('{', '`{')
-
+        
+        Write-Host ("##vso[task.setvariable variable=E34A69771F47424D9217F3A4D6BCDC95;issecret=true;]$servicePassword")  # Make sure the password doesn't show up in the log.
+        
         $additionalSharedArguments += " -username:$serviceUsername"
         if (-Not [string]::IsNullOrWhiteSpace($servicePassword)) {
             $additionalSharedArguments += " -password:""$servicePassword"""
