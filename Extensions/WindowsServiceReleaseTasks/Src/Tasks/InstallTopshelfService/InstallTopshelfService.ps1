@@ -16,7 +16,7 @@ Try {
     [string]$killMmcTaskManager = Get-VstsInput -Name killMmcTaskManager
     [bool]$targetIsDeploymentGroup = Get-VstsInput -Name deploymentGroup -Require -AsBool
 
-    Write-Output "Installing TopShelf service: $topshelfExePaths with instanceName: $instanceName. Version: {{tokens.BuildNumber}}"
+    Write-Output "Installing TopShelf service: $topshelfExePaths with instanceName: $instanceName."
 
     $env:CURRENT_TASK_ROOTDIR = Split-Path -Parent $MyInvocation.MyCommand.Path
 
@@ -32,7 +32,9 @@ Try {
         [string]$servicePassword = Get-VstsInput -Name servicePassword
         
         $servicePassword = $servicePassword.Replace('`', '``').Replace('"', '`"').Replace('$', '`$').Replace('&', '`&').Replace('''', '`''').Replace('(', '`(').Replace(')', '`)').Replace('@', '`@').Replace('}', '`}').Replace('{', '`{')
-
+        
+        Write-Host ("##vso[task.setvariable variable=E34A69771F47424D9217F3A4D6BCDC95;issecret=true;]$servicePassword")  # Make sure the password doesn't show up in the log.
+        
         $additionalSharedArguments += " -username:$serviceUsername"
         if (-Not [string]::IsNullOrWhiteSpace($servicePassword)) {
             $additionalSharedArguments += " -password:""$servicePassword"""
@@ -46,7 +48,7 @@ Try {
         $additionalSharedArguments += " -instance:$instanceName"
     }
     if (-Not [string]::IsNullOrWhiteSpace($serviceName)) {
-        $additionalSharedArguments += " -servicename:$serviceName"
+        $additionalSharedArguments += " -servicename ""$serviceName"""
     }
     if (-Not [string]::IsNullOrWhiteSpace($displayName)) {
         $additionalSharedArguments += " -displayname ""$displayName"""

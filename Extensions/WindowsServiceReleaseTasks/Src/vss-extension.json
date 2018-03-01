@@ -2,7 +2,7 @@
     "manifestVersion": 1,
     "id": "windows-service-release-tasks",
     "name": "Windows Service Release Tasks",
-    "version": "{{tokens.BuildNumber}}",
+    "version": "0.0.0",
     "publisher": "jabbera",
     "public": "true",
     "targets": [{
@@ -12,7 +12,7 @@
     "categories": [
         "Build and release"
     ],
-    "tags": ["service", "release", "windows service"],
+    "tags": ["service", "release", "windows service", "deployment", "group"],
     "content": {
         "license": {
             "path": "license.txt"
