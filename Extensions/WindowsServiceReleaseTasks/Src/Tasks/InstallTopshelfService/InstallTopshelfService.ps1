@@ -48,7 +48,7 @@ Try {
         $additionalSharedArguments += " -instance:$instanceName"
     }
     if (-Not [string]::IsNullOrWhiteSpace($serviceName)) {
-        $additionalSharedArguments += " -servicename:$serviceName"
+        $additionalSharedArguments += " -servicename ""$serviceName"""
     }
     if (-Not [string]::IsNullOrWhiteSpace($displayName)) {
         $additionalSharedArguments += " -displayname ""$displayName"""
