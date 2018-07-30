@@ -24,3 +24,4 @@ node_modules
 ## Application Specific
 _build
 _package
+.vs
