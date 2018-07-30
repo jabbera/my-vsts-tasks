@@ -2,33 +2,29 @@
     "manifestVersion": 1,
     "id": "windows-service-release-tasks",
     "name": "Windows Service Release Tasks",
-    "version": "{{tokens.BuildNumber}}",
+    "version": "0.0.0",
     "publisher": "jabbera",
-	"public": "true",
-    "targets": [
-        {
-            "id": "Microsoft.VisualStudio.Services"
-        }
-    ],    
+    "public": "true",
+    "targets": [{
+        "id": "Microsoft.VisualStudio.Services"
+    }],
     "description": "Release management tasks for the starting, stopping, and install(TopShelf) of windows services.",
     "categories": [
         "Build and release"
     ],
-    "tags": [ "service", "release", "windows service" ],
-	 "content": {
+    "tags": ["service", "release", "windows service", "deployment", "group"],
+    "content": {
         "license": {
             "path": "license.txt"
         },
-		"details": {
-			"path": "overview.md"
-		}
+        "details": {
+            "path": "overview.md"
+        }
     },
-	"screenshots": [
-		{
-			"path": "screenshots/screenshot1.png"
-		}
-	],
-	"links": {
+    "screenshots": [{
+        "path": "screenshots/screenshot1.png"
+    }],
+    "links": {
         "getstarted": {
             "uri": "https://github.com/jabbera/my-vsts-tasks"
         },
@@ -37,10 +33,9 @@
         }
     },
     "icons": {
-        "default": "extension-icon.png"        
+        "default": "extension-icon.png"
     },
-    "files": [
-        {
+    "files": [{
             "path": "Tasks/StartWindowsService"
         },
         {
@@ -53,8 +48,7 @@
             "path": "Tasks/GrantLogonAsAServiceRight"
         }
     ],
-    "contributions": [
-        {
+    "contributions": [{
             "id": "start-windows-service-task",
             "type": "ms.vss-distributed-task.task",
             "targets": [
@@ -95,7 +89,7 @@
             }
         }
     ],
-	"galleryFlags": [
-		"Public"
-	]
+    "galleryFlags": [
+        "Public"
+    ]
 }
