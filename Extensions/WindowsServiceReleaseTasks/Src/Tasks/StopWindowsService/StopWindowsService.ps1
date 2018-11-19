@@ -11,7 +11,7 @@ Try {
     [string]$killIfTimedOut = Get-VstsInput -Name killIfTimedOut -Require
     [bool]$targetIsDeploymentGroup = Get-VstsInput -Name deploymentGroup -Require -AsBool
 
-    Write-Output "Stopping Windows Service: $serviceName and setting startup type to: $startupType. Kill: $killIfTimedOut"
+    Write-Output "Stopping Windows Service: $serviceNames and setting startup type to: $startupType. Kill: $killIfTimedOut"
 
     $env:CURRENT_TASK_ROOTDIR = Split-Path -Parent $MyInvocation.MyCommand.Path
 
